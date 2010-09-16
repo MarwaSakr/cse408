@@ -14,7 +14,7 @@ public class App
         do{
             selected_option = scan.nextInt();
             switch(selected_option){
-					case Menu.SELECT_IMAGE_KEY:
+                    case Menu.SELECT_IMAGE_KEY:
                         System.out.println("Please enter the filename of your image:");
                         String filename = scan.next();
                         current_image_info = ImageUtil.load_image(filename);

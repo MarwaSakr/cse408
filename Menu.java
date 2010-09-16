@@ -1,6 +1,6 @@
 public class Menu {
     
-	public static final int SELECT_IMAGE_KEY = 0;
+    public static final int SELECT_IMAGE_KEY = 0;
     public static final int COLOR_INFO_KEY = 1;
     public static final int ADJUST_SATURATION_KEY = 2;
     public static final int SHIFT_HUE_KEY = 3;
