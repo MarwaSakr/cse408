@@ -12,6 +12,7 @@ public class App
         Menu.printMenu();
 
         do{
+           System.out.print(">");
             selected_option = scan.nextInt();
             switch(selected_option){
                     case Menu.SELECT_IMAGE_KEY:
