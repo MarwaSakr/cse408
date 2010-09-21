@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 import magick.*;
 import magick.util.*;
 
@@ -9,23 +10,23 @@ public class App
     {  
         System.setProperty ("jmagick.systemclassloader" , "no");
         MagickImage current_image = null;
-        int selected_option;
+        int selected_option = -1;
         Scanner scan = new Scanner(System.in);
         Menu.printMenu();
 
         do{
-           System.out.print(">");
-            selected_option = scan.nextInt();
+            System.out.print(">");
+            try{
+                selected_option = scan.nextInt();
+            } catch(InputMismatchException ex){
+                scan.next();
+                selected_option = -1;
+            }
             switch(selected_option){
                     case Menu.SELECT_IMAGE_KEY:
                         System.out.println("Please enter the filename of your image:");
                         String filename = scan.next();
                         current_image = ImageUtil.load_image(filename);
-                        if (current_image != null){
-                            System.out.println("File successfully Loaded");
-                        } else {
-                            System.out.println("Null MagickImage");
-                        }
                         break;
                     case Menu.COLOR_INFO_KEY:
                         break;

@@ -12,9 +12,14 @@ public class ImageUtil {
             current_image_info = new ImageInfo(filename);
             current_image = new MagickImage(current_image_info);
         } catch (MagickException ex) {
-            System.out.println("ERROR");
+            System.out.println("Error loading file");
             System.err.println(ex.toString());
         } finally {
+            if (current_image != null){
+                System.out.println("File successfully Loaded");
+            } else {
+                System.out.println("Null MagickImage");
+            }
             return current_image;
         }
     }
