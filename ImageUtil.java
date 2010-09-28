@@ -1,8 +1,10 @@
 import magick.*;
-import magick.util.MagickWindow;
+import magick.util.MagickViewer;
+import java.awt.Frame;
 
 public class ImageUtil {
-    private static MagickWindow window = null;
+    private static Frame frame = new Frame("CSE408 - Project 1");
+    private static MagickViewer window = null;
 
     public static MagickImage load_image(String filename){
         System.setProperty ("jmagick.systemclassloader" , "no");
@@ -27,15 +29,22 @@ public class ImageUtil {
     
     public static void display_image(MagickImage image){
         if (window != null) {
+            frame.removeNotify();   
             window.setVisible(false);
+            frame = new Frame("CSE408 - Project 1");
         }
-        window = new MagickWindow(image);
+        window = new MagickViewer();
         try{
+            window.setImage(image);
             window.setSize(image.getDimension());
+            frame.setSize(image.getDimension());
         } catch (MagickException ex) {
+            System.out.println("not displayed");
             System.err.println(ex.toString());
         } finally {
             window.setVisible(true);
+            frame.add(window);
+            frame.setVisible(true);
         }
     }
 }
