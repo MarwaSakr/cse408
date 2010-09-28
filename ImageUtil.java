@@ -2,6 +2,7 @@ import magick.*;
 import magick.util.MagickWindow;
 
 public class ImageUtil {
+    private static MagickWindow window = null;
 
     public static MagickImage load_image(String filename){
         System.setProperty ("jmagick.systemclassloader" , "no");
@@ -25,7 +26,16 @@ public class ImageUtil {
     }
     
     public static void display_image(MagickImage image){
-        MagickWindow window = new MagickWindow(image);
-        window.setVisible(true);
+        if (window != null) {
+            window.setVisible(false);
+        }
+        window = new MagickWindow(image);
+        try{
+            window.setSize(image.getDimension());
+        } catch (MagickException ex) {
+            System.err.println(ex.toString());
+        } finally {
+            window.setVisible(true);
+        }
     }
 }
