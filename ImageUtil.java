@@ -26,10 +26,10 @@ public class ImageUtil {
             return current_image;
         }
     }
-    
+
     public static void display_image(MagickImage image){
         if (window != null) {
-            frame.removeNotify();   
+            frame.removeNotify();
             window.setVisible(false);
             frame = new Frame("CSE408 - Project 1");
         }
