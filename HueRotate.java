@@ -6,13 +6,15 @@ import java.awt.Frame;
 
 public class HueRotate {
 
-	static	double rOut,gOut,bOut;
-	static double rIn,gIn,bIn;
-	static double h,s,v;
-	static int opacity;
-	static MagickImage output_Image= new MagickImage();
+	public static double rOut,gOut,bOut;
+	public static double rIn,gIn,bIn;
+	public static double h,s,v;
+	public static int opacity;
+	public static MagickImage output_Image= new MagickImage();
 
 public static MagickImage rotateHue(MagickImage input_Image, int rotation){
+	rIn=5.0;
+	System.out.println("rIn= "+rIn);
 
 
         System.setProperty ("jmagick.systemclassloader" , "no");
@@ -31,6 +33,7 @@ public static MagickImage rotateHue(MagickImage input_Image, int rotation){
 
 					// Convert RGB values to HSV and add rotation to H
 					rgbToHSV(rIn,gIn,bIn,rotation);
+					// rgbToHSV calls hsvToRGB after changing the h value
 
 					PixelPacket pixelPacket = new PixelPacket((int)rOut,(int)gOut,(int)bOut,opacity);
 					output_Image.getOnePixel(i,j).setOpacity(opacity);
