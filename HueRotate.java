@@ -10,24 +10,30 @@ public class HueRotate {
 	static double rIn,gIn,bIn;
 	static double h,s,v;
 	static int opacity;
+	static MagickImage output_Image= new MagickImage();
 
-public static MagickImage rotateHue(MagickImage output_Image, int rotation){
+public static MagickImage rotateHue(MagickImage input_Image, int rotation){
+
+
         System.setProperty ("jmagick.systemclassloader" , "no");
         try {
-            for(int i=0; i<(int)output_Image.getXResolution(); i++)
+			output_Image.setXResolution(input_Image.getXResolution());
+			output_Image.setYResolution(input_Image.getYResolution());
+            for(int i=0; i<(int)input_Image.getXResolution(); i++)
             {
-				for (int j=0; j<(int)output_Image.getYResolution();j++)
+				for (int j=0; j<(int)input_Image.getYResolution();j++)
 				{
 					// Get the current RGB values
-					rIn=(double)output_Image.getOnePixel(i,j).getRed();
-					gIn=output_Image.getOnePixel(i,j).getGreen();
-					bIn=output_Image.getOnePixel(i,j).getBlue();
-					opacity=output_Image.getOnePixel(i,j).getOpacity();
+					rIn=(double)input_Image.getOnePixel(i,j).getRed();
+					gIn=(double)input_Image.getOnePixel(i,j).getGreen();
+					bIn=(double)input_Image.getOnePixel(i,j).getBlue();
+					opacity=input_Image.getOnePixel(i,j).getOpacity();
 
 					// Convert RGB values to HSV and add rotation to H
 					rgbToHSV(rIn,gIn,bIn,rotation);
 
 					PixelPacket pixelPacket = new PixelPacket((int)rOut,(int)gOut,(int)bOut,opacity);
+					output_Image.getOnePixel(i,j).setOpacity(opacity);
 					output_Image.getOnePixel(i,j).setRed((int)rOut);
 					output_Image.getOnePixel(i,j).setGreen((int)gOut);
 					output_Image.getOnePixel(i,j).setBlue((int)bOut);
