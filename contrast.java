@@ -21,7 +21,7 @@ byte[] newPixels = new byte[dimensions.width * dimensions.height * 3];
 
 System.out.println("enter contrast value (default:1 ; range 0-256) ");
 Scanner input = new Scanner(System.in);
-int k = input.nextInt();
+double k = input.nextDouble();
 
 int x = 0;
 for(int i = 0; i < dimensions.height; i++) {
@@ -30,9 +30,9 @@ PixelPacket pixel = image.getOnePixel(j,  i);
 int red = pixel.getRed();
 int green= pixel.getGreen();
 int blue= pixel.getBlue();
-red= (red- 128)*k + 128;
-green= (green- 128)*k + 128;
-blue= (blue- 128)*k + 128;
+red= (int)((red- 128)*k + 128);
+green= (int)((green- 128)*k + 128);
+blue= (int)((blue- 128)*k + 128);
 if(red> 255) {
 red= 255;
 } else if( red< 0) {
