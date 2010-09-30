@@ -42,14 +42,14 @@ public class App
                     		int rotation=Integer.parseInt(scan.next());
                     		try{
                     		String fileName=current_image.getFileName();
-                    		current_image= HueRotate.rotateHue(current_image.getFileName(), rotation);}
+                    		current_image= HueRotate.rotateHue(current_image, rotation);}
                     		catch(MagickException ex) {
 								System.out.println("Error loading file");
             					System.err.println(ex.toString());
 							}
                             current_image = HueRotate.rotateHue(current_image,rotation);
                             System.out.println("Hue Rotated");
-                           
+
 						}
                         break;
 

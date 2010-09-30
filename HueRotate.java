@@ -19,7 +19,7 @@ public static MagickImage rotateHue(MagickImage output_Image, int rotation){
 				for (int j=0; j<(int)output_Image.getYResolution();j++)
 				{
 					// Get the current RGB values
-					rIn=output_Image.getOnePixel(i,j).getRed();
+					rIn=(double)output_Image.getOnePixel(i,j).getRed();
 					gIn=output_Image.getOnePixel(i,j).getGreen();
 					bIn=output_Image.getOnePixel(i,j).getBlue();
 					opacity=output_Image.getOnePixel(i,j).getOpacity();
