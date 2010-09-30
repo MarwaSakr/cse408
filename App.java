@@ -3,11 +3,11 @@ import java.util.InputMismatchException;
 import magick.*;
 import magick.util.*;
 
-public class App 
+public class App
 {
-    
+
     public static void main( String[] args )
-    {  
+    {
         System.setProperty ("jmagick.systemclassloader" , "no");
         MagickImage current_image = null;
         int selected_option = -1;
@@ -38,7 +38,7 @@ public class App
                         } else {
                             System.out.println("Please enter the angle to rotate the hue (in degrees):");
                             int rotation = 0;
-                            try { 
+                            try {
                                 rotation = scan.nextInt();
                             } catch(InputMismatchException ex){
                                 scan.next();
@@ -81,6 +81,6 @@ public class App
         } while (selected_option != Menu.EXIT_KEY);
         System.exit(0);
 
-        
+
     }
 }
