@@ -9,18 +9,25 @@ public class HueRotate {
 	static	double rOut,gOut,bOut;
 	static double rIn,gIn,bIn;
 	static double h,s,v;
+	static int opacity;
 
 public static MagickImage rotateHue(MagickImage output_Image, int rotation){
-        System.setProperty ("jmagick.systemclassloader" , "no");    
+        System.setProperty ("jmagick.systemclassloader" , "no");
         try {
             for(int i=0; i<(int)output_Image.getXResolution(); i++)
             {
 				for (int j=0; j<(int)output_Image.getYResolution();j++)
 				{
+					// Get the current RGB values
 					rIn=output_Image.getOnePixel(i,j).getRed();
 					gIn=output_Image.getOnePixel(i,j).getGreen();
 					bIn=output_Image.getOnePixel(i,j).getBlue();
+					opacity=output_Image.getOnePixel(i,j).getOpacity();
+
+					// Convert RGB values to HSV and add rotation to H
 					rgbToHSV(rIn,gIn,bIn,rotation);
+
+					PixelPacket pixelPacket = new PixelPacket((int)rOut,(int)gOut,(int)bOut,opacity);
 					output_Image.getOnePixel(i,j).setRed((int)rOut);
 					output_Image.getOnePixel(i,j).setGreen((int)gOut);
 					output_Image.getOnePixel(i,j).setBlue((int)bOut);
@@ -28,14 +35,14 @@ public static MagickImage rotateHue(MagickImage output_Image, int rotation){
 			} // end of nested for loop
         } // end of try statement
 		catch (MagickException ex){}
+		System.out.println("RGB= "+rOut+", "+gOut+", "+bOut+"\n");
         return output_Image;
     } // end of rotateHue
 
-    // beginning of calcHSV
+    // beginning of rgbToHSV
     private static void rgbToHSV(double Rin,double Gin, double Bin, int rotation)
     {
 		double diff;
-		h=0.0;
 		v=maxRGB(Rin,Gin,Bin);
 		diff=(maxRGB(Rin,Gin,Bin)-minRGB(Rin,Gin,Bin));
 		if (maxRGB(Rin,Gin,Bin)!=0)
@@ -63,16 +70,18 @@ public static MagickImage rotateHue(MagickImage output_Image, int rotation){
 		}
 		else
 		{
-			h=-1.0;
+			h=-7.0;
 		}
 		h*=60;
 		h+=rotation;
-		h=h%360;
+		if (h<0.0)
+		h+=360.0;
 
 	}
 	// end of rgbToHSV
 
 	// Beginning of hsvToRGB
+	// Converts HSV back into RGB
 	private static void hsvToRGB()
 	{
 		double c=s*v;
@@ -119,6 +128,7 @@ public static MagickImage rotateHue(MagickImage output_Image, int rotation){
 			gTemp=0.0;
 			bTemp=x;
 		}
+
 		diff=v-c;
 
 		rOut=rTemp+diff;
