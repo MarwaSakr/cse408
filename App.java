@@ -33,7 +33,19 @@ public class App
                     case Menu.ADJUST_SATURATION_KEY:
                         break;
                     case Menu.SHIFT_HUE_KEY:
-                    
+                        if (current_image == null) {
+                            System.out.println("Please select an image");
+                        } else {
+                            System.out.println("Please enter the angle to rotate the hue (in degrees):");
+                            int rotation = 0;
+                            try { 
+                                rotation = scan.nextInt();
+                            } catch(InputMismatchException ex){
+                                scan.next();
+                            }
+                            current_image = HueRotate.rotateHue(current_image,rotation);
+                            System.out.println("Hue Rotated");
+                        }
                         break;
                     case Menu.ADJUST_LIGHT_KEY:
                         break;
