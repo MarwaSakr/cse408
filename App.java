@@ -48,6 +48,7 @@ public class App
                         }
                         break;
                     case Menu.ADJUST_LIGHT_KEY:
+                        current_image = contrast.changeLight(current_image);
                         break;
                     case Menu.REDUCE_COLOR_INSTANCES_KEY:
                         break;
