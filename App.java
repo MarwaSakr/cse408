@@ -32,21 +32,27 @@ public class App
                         break;
                     case Menu.ADJUST_SATURATION_KEY:
                         break;
+
                     case Menu.SHIFT_HUE_KEY:
-                        if (current_image == null) {
-                            System.out.println("Please select an image");
-                        } else {
-                            System.out.println("Please enter the angle to rotate the hue (in degrees):");
-                            int rotation = 0;
-                            try {
-                                rotation = scan.nextInt();
-                            } catch(InputMismatchException ex){
-                                scan.next();
-                            }
+                    	if (current_image == null)
+                    	System.out.println("Please select an image");
+                    	else
+                    	{
+							System.out.println("Please enter the angle to rotate the hue (in degrees):");
+                    		int rotation=Integer.parseInt(scan.next());
+                    		try{
+                    		String fileName=current_image.getFileName();
+                    		current_image= HueRotate.rotateHue(current_image.getFileName(), rotation);}
+                    		catch(MagickException ex) {
+								System.out.println("Error loading file");
+            					System.err.println(ex.toString());
+							}
                             current_image = HueRotate.rotateHue(current_image,rotation);
                             System.out.println("Hue Rotated");
-                        }
+                           
+						}
                         break;
+
                     case Menu.ADJUST_LIGHT_KEY:
                         current_image = contrast.changeLight(current_image);
                         break;
@@ -62,7 +68,7 @@ public class App
                         }
                         break;
                     case Menu.DISPLAY_IMAGE_KEY:
-                        if (current_image == null){
+                        if (current_image != null){
                             System.out.println("Please Select an image");
                         } else {
                             ImageUtil.display_image(current_image);
