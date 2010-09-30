@@ -47,4 +47,18 @@ public class ImageUtil {
             frame.setVisible(true);
         }
     }
+    
+    public static void save_image(String filename, MagickImage image){
+        ImageInfo image_info;
+        boolean saved = false;
+        try{
+            image_info = new ImageInfo(filename);
+            image.setFileName(filename);
+            saved = image.writeImage(image_info);
+        } catch (MagickException ex) {
+            saved = false;
+        } finally {
+            System.out.println("Image Saved Correctly: " + saved);
+        }
+    }
 }

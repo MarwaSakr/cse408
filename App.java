@@ -52,6 +52,15 @@ public class App
                         break;
                     case Menu.REDUCE_COLOR_INSTANCES_KEY:
                         break;
+                    case Menu.SAVE_KEY:
+                        if (current_image == null) {
+                            System.out.println("Please Select an image");
+                        } else {
+                            System.out.println("Please enter the filename of your image:");
+                            filename = scan.next();
+                            ImageUtil.save_image(filename, current_image);
+                        }
+                        break;
                     case Menu.DISPLAY_IMAGE_KEY:
                         if (current_image == null){
                             System.out.println("Please Select an image");
