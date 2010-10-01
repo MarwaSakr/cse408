@@ -12,6 +12,7 @@ public class App
     {
         System.setProperty ("jmagick.systemclassloader" , "no");
         MagickImage current_image = null;
+        Saturation saturate = null;
         int selected_option = -1;
         int xVal = 0, yVal = 0;
         Scanner scan = new Scanner(System.in);
@@ -121,6 +122,15 @@ public class App
                         }
                         break;
                     case Menu.ADJUST_SATURATION_KEY:
+                        System.out.println("Please enter the saturation value for your image:");
+				        String value = scan.next();
+				        saturate = new Saturation();
+				        try {
+					        current_image = saturate.saturate(Integer.valueOf(value), current_image);
+				        } catch (MagickException e) {
+					        // TODO Auto-generated catch block
+					        e.printStackTrace();
+				        }
                         break;
 
                     case Menu.SHIFT_HUE_KEY:
