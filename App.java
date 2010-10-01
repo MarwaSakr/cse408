@@ -6,6 +6,8 @@ import magick.util.*;
 public class App
 {
     public static int red = 0, blue = 0, green = 0;
+    public static ReduceColorIns reduceColor;
+    
     public static void main( String[] args )
     {
         System.setProperty ("jmagick.systemclassloader" , "no");
@@ -28,6 +30,11 @@ public class App
                         System.out.println("Please enter the filename of your image:");
                         String filename = scan.next();
                         current_image = ImageUtil.load_image(filename);
+                        try{
+                            reduceColor = new ReduceColorIns(filename);
+                        } catch (MagickException ex) {
+                            System.out.println("Reduce Color image not loaded");
+                        }
                         break;
                     case Menu.COLOR_INFO_KEY:
                         if (current_image == null)
@@ -102,11 +109,16 @@ public class App
 
                         break;
                     case Menu.REDUCE_COLOR_INSTANCES_KEY:
-                        try {
-                            current_image.rgbTransformImage(ColorspaceType.YIQColorspace);
-                            PixelPacket test_pixel = current_image.getOnePixel(0, 0);
-                            System.out.println(test_pixel.getRed() /256 + ", " + test_pixel.getGreen() /256 + ", " + test_pixel.getBlue() /256);
-                        } catch (MagickException ex) {}
+                        int reduceOption;
+                        
+                        try{
+                            reduceColor.copyPixels();
+                            reduceColor.printMenu();
+                            reduceOption = scan.nextInt();
+                            reduceColor.convertColorSpace(reduceOption);
+                        } catch (MagickException ex) {
+                            System.out.println("Reduce Colors did not work.");
+                        }
                         break;
                     case Menu.ADJUST_SATURATION_KEY:
                         break;
