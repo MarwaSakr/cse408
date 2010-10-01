@@ -91,6 +91,8 @@ public static MagickImage rotateHue(MagickImage input_Image, int rotation){
 		h+=rotation;
 		if (h<0.0)
 		h+=360.0;
+		else if(h>360.0)
+		h-=360.0;
 
 	}
 	// end of rgbToHSV
