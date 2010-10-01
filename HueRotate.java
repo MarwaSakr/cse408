@@ -31,21 +31,16 @@ public static MagickImage rotateHue(MagickImage input_Image, int rotation){
 					rIn=pixelPacket.getRed()/256;
 					gIn=pixelPacket.getGreen()/256;
 					bIn=pixelPacket.getBlue()/256;
-					opacity=pixelPacket.getOpacity();
 
 					// Convert RGB values to HSV and add rotation to H
 					rgbToHSV(rIn,gIn,bIn,rotation);
-					// rgbToHSV calls hsvToRGB after changing the h value
-					
+
 					hsvToRGB();
 
 					newPixels[3*x] = (byte)rOut;
 					newPixels[3*x+1] = (byte)gOut;
 					newPixels[3*x+2] = (byte)bOut;
 					newPixels[3*x+3] = (byte)255;
-					//System.out.println("RGB= "+rOut+", "+gOut+", "+bOut+"\n");
-				//	System.out.println("HSV= "+h+" , "+s+" , "+v+"\n");
-				//	System.out.println("Rtemp Gtemp and Btemp= "+rTemp+" , "+gTemp + ", "+bTemp+"\n");
 					x+=1;
 
 				}
@@ -56,7 +51,7 @@ public static MagickImage rotateHue(MagickImage input_Image, int rotation){
 
         } // end of try statement
 		catch (MagickException ex){}
-		
+
         return output_Image;
     } // end of rotateHue
 
@@ -157,7 +152,6 @@ public static MagickImage rotateHue(MagickImage input_Image, int rotation){
 		rOut=rTemp+diff;
 		gOut=gTemp+diff;
 		bOut=bTemp+diff;
-		System.out.println("RGB temps= "+rTemp+ ", "+gTemp+ " , " + bTemp+ "\n");
 	}
 	// end of hsvToRGB
 
