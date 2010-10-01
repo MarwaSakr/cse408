@@ -104,37 +104,37 @@ public static MagickImage rotateHue(MagickImage input_Image, int rotation){
 	{
 		double c=s*v;
 		double hPrime=(h/60)%6;
-		double x=c*(1-Math.abs(hPrime%2-1));
+		double x=c*(1-Math.abs((hPrime%2)-1));
 		double rTemp;
 		double gTemp;
 		double bTemp;
 		double diff;
 
-		if (h>=0 && h<1)
+		if (hPrime>=0 && hPrime<1)
 		{
 			rTemp=c;
 			gTemp=x;
 			bTemp=0.0;
 		}
-		else if (h>=1 && h<2)
+		else if (hPrime>=1 && hPrime<2)
 		{
 			rTemp=x;
 			gTemp=c;
 			bTemp=0.0;
 		}
-		else if (h>=2 && h<3)
+		else if (hPrime>=2 && hPrime<3)
 		{
 			rTemp=0.0;
 			gTemp=c;
 			bTemp=x;
 		}
-		else if (h>=3 && h<4)
+		else if (hPrime>=3 && hPrime<4)
 		{
 			rTemp=0.0;
 			gTemp=x;
 			bTemp=c;
 		}
-		else if (h>=4 && h<5)
+		else if (hPrime>=4 && hPrime<5)
 		{
 			rTemp=x;
 			gTemp=0.0;
