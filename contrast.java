@@ -1,81 +1,80 @@
-import magick.ImageInfo;
+
+import java.awt.Dimension;
+import java.util.Scanner;
 import magick.MagickImage;
 import magick.MagickException;
 import magick.MagickApiException;
 import magick.util.MagickWindow;
 import magick.ColorspaceType;
-import java.awt.Dimension;
-import java.util.Scanner;
+import magick.ImageInfo;
+
 
 import magick.PixelPacket;
 
-public class contrast {
+public class contrast
+{
+	public static int applyContrast(int pixel,int c)
+	{
+		pixel = (pixel - 128)*c;
+		pixel = pixel + 128;
+		if(pixel> 255)
+			pixel= 255;
+		else if( pixel< 0)
+			pixel = 0;
+		return pixel;
+	}
 
-    public static MagickImage changeLight(MagickImage image) {
+   public static MagickImage changeLight(MagickImage image)
+   {
+	   
+	   try
+	   {
+		   int contrast_value = 1;
+		   int red,blue,green = 0;
+		   Dimension dimensions = image.getDimension();							// Image Dimensions
+		   byte[] newPixels = new byte[dimensions.width * dimensions.height * 3];  // Create  pixel arrays
+		   Scanner input = new Scanner(System.in);
+		   System.out.println("Enter the light value (default:1 ; range -256 to 256) ");
+		   contrast_value = input.nextInt();
+		   int x = 0;
+			for(int i = 0; i < dimensions.height; i++)								// loop through the image to pick pixel one by one
+			{
+				for(int j = 0; j < dimensions.width; j++)
+				{
+					PixelPacket pixel = image.getOnePixel(j,  i);
+					red = pixel.getRed();										// get red pixel
+					green= pixel.getGreen();									// get green pixel
+					blue= pixel.getBlue();   									// get blue pixel
 
-try {
-//Grab our image dimensions
-Dimension dimensions = image.getDimension();
-//Create our pixel arrays. One for old pixels, 1 for new
-byte[] newPixels = new byte[dimensions.width * dimensions.height * 3];
+					// Apply contrast
+					red = applyContrast(red,contrast_value);
+					green= applyContrast(green,contrast_value);
+					blue= applyContrast(blue,contrast_value);
 
-System.out.println("enter contrast value (default:1 ; range 0-256) ");
-Scanner input = new Scanner(System.in);
-double k = input.nextDouble();
+					//set new pixels
+					newPixels[x] = (byte)red;
+					newPixels[x+1] = (byte)green;
+					newPixels[x+2] = (byte)blue;
+					x = x+3;
+				}
+			}
 
-int x = 0;
-for(int i = 0; i < dimensions.height; i++) {
-for(int j = 0; j < dimensions.width; j++) {
-PixelPacket pixel = image.getOnePixel(j,  i);
-int red = pixel.getRed();
-int green= pixel.getGreen();
-int blue= pixel.getBlue();
-red= (int)((red- 128)*k + 128);
-green= (int)((green- 128)*k + 128);
-blue= (int)((blue- 128)*k + 128);
-if(red> 255) {
-red= 255;
-} else if( red< 0) {
-red= 0;
-}
+			image = new MagickImage();
+			image.constituteImage(dimensions.width, dimensions.height, "RGB", newPixels);
 
-if(green> 255) {
-green= 255;
-} else if(green< 0) {
-green= 0;
-}
+		}
+	   // Error Exception
+		catch (MagickApiException ex)
+		{
 
-if(blue> 255) {
-blue= 255;
-} else if(blue< 0) {
-blue= 0;
-}
-//System.out.println("red: " + red+ " green: " + green+ " blue: " + blue);
-newPixels[x] = (byte)red;
-newPixels[x+1] = (byte)green;
-newPixels[x+2] = (byte)blue;
-x = x+3;
-}
-}
+			System.out.println("MagickApiException: Catched ");
+		}
+		catch (MagickException ex)
+		{
 
-image = new MagickImage();
-/*
-* Create the new image with new pixels. Note that the
-* color space isn't actually RGB, the image just needs to know
-* if there are 3 or 4 components to a pixel. So RGB or RGBA (I think)
-*/
-image.constituteImage(dimensions.width, dimensions.height, "RGB", newPixels);
+			System.out.println("MagickException: Catched ");
+       	}
 
-}
-catch (MagickApiException ex) {
-System.err.println("MagickException: " + ex + ": " + ex.getReason() + ", " + ex.getDescription());
-ex.printStackTrace();
-}
-catch (MagickException ex) {
-System.err.println("MagickException: " + ex);
-ex.printStackTrace();
-        }
-
-return image;
-}
+		return image;
+	}
 }
