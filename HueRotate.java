@@ -1,6 +1,8 @@
 import magick.*;
 import magick.util.MagickViewer;
 import java.awt.Frame;
+import magick.ColorspaceType;
+import java.awt.Dimension;
 
 
 
@@ -13,35 +15,39 @@ public class HueRotate {
 	public static MagickImage output_Image= new MagickImage();
 
 public static MagickImage rotateHue(MagickImage input_Image, int rotation){
-	rIn=5.0;
-	System.out.println("rIn= "+rIn);
-
 
         System.setProperty ("jmagick.systemclassloader" , "no");
         try {
-			output_Image.setXResolution(input_Image.getXResolution());
-			output_Image.setYResolution(input_Image.getYResolution());
-            for(int i=0; i<(int)input_Image.getXResolution(); i++)
+			Dimension dimensions = input_Image.getDimension();
+			byte[] newPixels = new byte[dimensions.width * dimensions.height * 3];
+            int x=0;
+            for(int i=0; i<dimensions.height; i++)
             {
-				for (int j=0; j<(int)input_Image.getYResolution();j++)
+				for (int j=0; j<dimensions.width;j++)
 				{
+					PixelPacket pixelPacket= input_Image.getOnePixel(j,  i);
+
 					// Get the current RGB values
-					rIn=(double)input_Image.getOnePixel(i,j).getRed();
-					gIn=(double)input_Image.getOnePixel(i,j).getGreen();
-					bIn=(double)input_Image.getOnePixel(i,j).getBlue();
-					opacity=input_Image.getOnePixel(i,j).getOpacity();
+					rIn=pixelPacket.getRed();
+					gIn=pixelPacket.getGreen();
+					bIn=pixelPacket.getBlue();
+					opacity=pixelPacket.getOpacity();
 
 					// Convert RGB values to HSV and add rotation to H
 					rgbToHSV(rIn,gIn,bIn,rotation);
 					// rgbToHSV calls hsvToRGB after changing the h value
 
-					PixelPacket pixelPacket = new PixelPacket((int)rOut,(int)gOut,(int)bOut,opacity);
-					output_Image.getOnePixel(i,j).setOpacity(opacity);
-					output_Image.getOnePixel(i,j).setRed((int)rOut);
-					output_Image.getOnePixel(i,j).setGreen((int)gOut);
-					output_Image.getOnePixel(i,j).setBlue((int)bOut);
+					newPixels[x] = (byte)rOut;
+					newPixels[x+1] = (byte)gOut;
+					newPixels[x+2] = (byte)bOut;
+					x+=3;
+
 				}
 			} // end of nested for loop
+
+			output_Image = new MagickImage();
+			output_Image.constituteImage(dimensions.width, dimensions.height, "RGB", newPixels);
+
         } // end of try statement
 		catch (MagickException ex){}
 		System.out.println("RGB= "+rOut+", "+gOut+", "+bOut+"\n");
