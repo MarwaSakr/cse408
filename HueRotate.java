@@ -104,9 +104,9 @@ public static MagickImage rotateHue(MagickImage input_Image, int rotation){
 		double c=s*v;
 		double hPrime=(h/60)%6;
 		double x=c*(1-Math.abs(hPrime%2-1));
-		double rTemp=0.0;
-		double gTemp=0.0;
-		double bTemp=0.0;
+		double rTemp;
+		double gTemp;
+		double bTemp;
 		double diff;
 
 		if (h>=0 && h<1)
@@ -139,7 +139,7 @@ public static MagickImage rotateHue(MagickImage input_Image, int rotation){
 			gTemp=0.0;
 			bTemp=c;
 		}
-		else if (h>=5 && h<6)
+		else
 		{
 			rTemp=c;
 			gTemp=0.0;
