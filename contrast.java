@@ -15,7 +15,7 @@ public class contrast
 {
 	public static int applyContrast(int pixel,int c)
 	{
-		pixel = (pixel - 128)*c;
+		pixel = (pixel/256 - 128)*c;
 		pixel = pixel + 128;
 		if(pixel> 255)
 			pixel= 255;
@@ -32,7 +32,7 @@ public class contrast
 		   int contrast_value = 1;
 		   int red,blue,green = 0;
 		   Dimension dimensions = image.getDimension();							// Image Dimensions
-		   byte[] newPixels = new byte[dimensions.width * dimensions.height * 3];  // Create  pixel arrays
+		   byte[] newPixels = new byte[dimensions.width * dimensions.height * 4 ];  // Create  pixel arrays
 		   Scanner input = new Scanner(System.in);
 		   System.out.println("Enter the light value (default:1 ; range -256 to 256) ");
 		   contrast_value = input.nextInt();
@@ -52,10 +52,11 @@ public class contrast
 					blue= applyContrast(blue,contrast_value);
 
 					//set new pixels
-					newPixels[x] = (byte)red;
-					newPixels[x+1] = (byte)green;
-					newPixels[x+2] = (byte)blue;
-					x = x+3;
+					newPixels[3*x] = (byte)red;
+					newPixels[3*x+1] = (byte)green;
+					newPixels[3*x+2] = (byte)blue;
+					newPixels[3*x+3] = (byte)255;
+					x = x+1;
 				}
 			}
 

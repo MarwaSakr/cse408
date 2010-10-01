@@ -19,7 +19,7 @@ public static MagickImage rotateHue(MagickImage input_Image, int rotation){
         System.setProperty ("jmagick.systemclassloader" , "no");
         try {
 			Dimension dimensions = input_Image.getDimension();
-			byte[] newPixels = new byte[dimensions.width * dimensions.height * 3];
+			byte[] newPixels = new byte[dimensions.width * dimensions.height * 4];
             int x=0;
             for(int i=0; i<dimensions.height; i++)
             {
@@ -37,10 +37,11 @@ public static MagickImage rotateHue(MagickImage input_Image, int rotation){
 					rgbToHSV(rIn,gIn,bIn,rotation);
 					// rgbToHSV calls hsvToRGB after changing the h value
 
-					newPixels[x] = (byte)rOut;
-					newPixels[x+1] = (byte)gOut;
-					newPixels[x+2] = (byte)bOut;
-					x+=3;
+					newPixels[3*x] = (byte)rOut;
+					newPixels[3*x+1] = (byte)gOut;
+					newPixels[3*x+2] = (byte)bOut;
+					newPixels[3*x+3] = (byte)255;
+					x+=1;
 
 				}
 			} // end of nested for loop
