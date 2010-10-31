@@ -106,8 +106,10 @@ public class App
                         switch(option)
                         {
                             case (1): // No Quantization
+                                signalYUV.quantizationFlag = 1;
                                 break;
                             case (2): // Uniform Quantization
+                                signalYUV.quantizationFlag = 2;
                                 break;
                             case (0): // Back to Main Menu
                                 Menu.printMenu();
