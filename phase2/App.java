@@ -13,6 +13,10 @@ public class App
 
     public static void main( String[] args )
     {
+		int intSize=32;
+		double yDistortion = 0.0;
+		double uDistortion = 0.0;
+		double vDistortion = 0.0;
         System.setProperty ("jmagick.systemclassloader" , "no");
         MagickImage current_image = null;
         int selected_option = -1;
@@ -36,6 +40,9 @@ public class App
 
                         // --- Create the Y, U, V arrays of the current image
                         signalYUV = PredictiveCodingOdd.createSignal(current_image);
+                        yDistortion = 0.0;
+                        uDistortion = 0.0;
+                        vDistortion = 0.0;
                         break;
                     case Menu.PREDICTIVE_CODING_OPTIONS:
                     {
@@ -61,7 +68,13 @@ public class App
                                 break;
                             case (2): // DPC fn = fn-1
                                 signalYUV.encodingFlag = 2;
-                                //PP Code
+                                try
+                                {
+									PredictiveCodingOdd.differentialPC2(signalYUV);
+								} catch (MagickException ex)
+								{
+									System.out.println(ex.toString());
+                                }
                                 break;
                             case (3): // DPC fn = floor( (fn-1 + fn-2)/2 )
                                 signalYUV.encodingFlag = 3;
@@ -73,15 +86,32 @@ public class App
                                 break;
                             case (4): // DPC fn = floor( (2*fn-1 + fn-2)/3 )
                                 signalYUV.encodingFlag = 4;
-                                //PP Code
+                                try
+                                {
+									PredictiveCodingOdd.differentialPC4(signalYUV);
+	                            } catch (MagickException ex)
+	                            {
+                                    System.out.println(ex.toString());
+                                }
                                 break;
                             case (5): // DPC fn = floor( (fn-1 + 2*fn-2)/3 )
                                 signalYUV.encodingFlag = 5;
-                                // PP Code
+                                try {
+										PredictiveCodingOdd.differentialPC5(signalYUV);
+		                            } catch (MagickException ex)
+		                            {
+		                                System.out.println(ex.toString());
+                                }
                                 break;
                             case (6): // DPC fn = floor( (fn-1 + fn-2 + ... + fn-10)/10 )
                                 signalYUV.encodingFlag = 6;
-                                // PP Code
+                                try
+                                {
+	                                   PredictiveCodingOdd.differentialPC6(signalYUV);
+                                } catch (MagickException ex)
+                                {
+                                    System.out.println(ex.toString());
+                                }
                                 break;
                             case (0): // Back to Main Menu
                                 Menu.printMenu();
@@ -202,7 +232,23 @@ public class App
                         //This will act as a debug key. I am using it to test if my
                         // predictive coding is working or not.
                         current_image = PredictiveCodingOdd.constructImage(signalYUV);
-                        System.out.println("Y distortion = "+ YUVencoding.yDistortion+" U distortion = "+ YUVencoding.uDistortion+ " V distortion = "+YUVencoding.vDistortion+" \n");
+
+                        int width = signalYUV.width;
+  			            int height = signalYUV.height;
+                        int resolution=height*width;
+						for (int i=0; i<height; i++)
+						{
+							for (int j=0; j<width; j++)
+						    {
+								yDistortion+=(double)((signalYUV.Yorg[i*width+j]-signalYUV.Ynew[i*width+j])*(signalYUV.Yorg[i*width+j]-signalYUV.Ynew[i*width+j]))/(double)resolution;
+					            uDistortion+=(double)((signalYUV.Uorg[i*width+j]-signalYUV.Unew[i*width+j])*(signalYUV.Uorg[i*width+j]-signalYUV.Unew[i*width+j]))/(double)resolution;
+		 	                    vDistortion+=(double)((signalYUV.Vorg[i*width+j]-signalYUV.Vnew[i*width+j])*(signalYUV.Vorg[i*width+j]-signalYUV.Vnew[i*width+j]))/(double)resolution;
+						             }
+         } // end of for loop
+
+                        System.out.println("Y distortion = "+ yDistortion+" U distortion = "+ uDistortion+ " V distortion = "+ vDistortion+" \n");
+                        signalYUV.setSizeOrg(intSize*signalYUV.width * signalYUV.height);
+                        System.out.println("Original Size = "+signalYUV.orgBits+" bits\n New Size = "+signalYUV.newBits+" bits\n");
                     } catch (MagickException ex) {
                         System.err.println(ex.toString());
                     }

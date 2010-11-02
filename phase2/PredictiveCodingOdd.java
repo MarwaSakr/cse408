@@ -265,10 +265,12 @@ public class PredictiveCodingOdd {
         int height = signal.height;
         int width = signal.width;
 
-        signal.Ynew[0] = signal.Yorg[0];
-        signal.Ynew[1] = signal.Yorg[1];
-
-
+        for (int i=0; i<10; i++)
+        {
+			signal.Ynew[i] = signal.Yorg[i];
+			signal.Unew[i] = signal.Uorg[i];
+			signal.Vnew[i] = signal.Vorg[i];
+		}
 
             for (int j = 10; j < height*width; j++) //j < width
             {
