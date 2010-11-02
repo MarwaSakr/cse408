@@ -113,12 +113,12 @@ public class App
                                 signalYUV.quantizationFlag = 2;
                                 int yBuck = QuantizeScheme.prompt(QuantizeScheme.Y);
                                 int uBuck = QuantizeScheme.prompt(QuantizeScheme.U);
-                                int VBuck = QuantizeScheme.prompt(QuantizeScheme.V); 
+                                int vBuck = QuantizeScheme.prompt(QuantizeScheme.V); 
                                 QuantizeScheme scheme = new QuantizeScheme(yBuck,uBuck,vBuck);
-                                for(int x = 0; x++; x<signalYUV.Y.length){
-                                    signalYUV.Y[x] = scheme.quantize(signalYUV.Y[x],QuantizeScheme.Y);
-                                    signalYUV.U[x] = scheme.quantize(signalYUV.U[x],QuantizeScheme.U);
-                                    signalYUV.V[x] = scheme.quantize(signalYUV.V[x],QuantizeScheme.V);
+                                for(int x = 0;x<signalYUV.Ynew.length;x++){
+                                    signalYUV.Ynew[x] = scheme.quantize(signalYUV.Ynew[x],QuantizeScheme.Y);
+                                    signalYUV.Unew[x] = scheme.quantize(signalYUV.Unew[x],QuantizeScheme.U);
+                                    signalYUV.Vnew[x] = scheme.quantize(signalYUV.Vnew[x],QuantizeScheme.V);
                                 }
                                 break;
                             case (0): // Back to Main Menu
