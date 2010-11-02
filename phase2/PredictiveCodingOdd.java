@@ -39,7 +39,7 @@ public class PredictiveCodingOdd {
             {
                 for(int j = 0; j < signal.width; j++)
                 {
-                    temp = image.getOnePixel(i, j);
+                    temp = image.getOnePixel(j, i);
                     ColorConversion.RGBtoYUV((int) Math.floor(temp.getRed()/256), (int) Math.floor(temp.getGreen()/256), (int) Math.floor(temp.getBlue()/256));
 
                     signal.Yorg[count] = (int) ColorConversion.YUV_Y;
@@ -63,17 +63,15 @@ public class PredictiveCodingOdd {
         MagickImage newImage = new MagickImage();
         byte pixels[] = new byte[signal.height*signal.width*3]; // no alpha channel
 
-        ColorConversion.YUVtoRGB(signal.Ynew[0], signal.Unew[0], signal.Vnew[0]);
-        System.out.println(ColorConversion.YUV_R + " " + ColorConversion.YUV_G + " " + ColorConversion.YUV_B);
+        ColorConversion.YUVtoRGB(signal.Yorg[0], signal.Uorg[0], signal.Vorg[0]);
 
         // for each Y,U, V value, convert back to RGB, and put them in pixels[]
-        for(int i = 0; i < signal.Yorg.length; i++)
+        for(int i = 0; i < signal.Ynew.length; i++)
         {
-            ColorConversion.YUVtoRGB(signal.Yorg[i], signal.Uorg[i], signal.Vorg[i]);
+            ColorConversion.YUVtoRGB(signal.Ynew[i], signal.Unew[i], signal.Vnew[i]);
             pixels[i*3] = (byte) ColorConversion.YUV_R;
             pixels[i*3 + 1] = (byte) ColorConversion.YUV_G;
             pixels[i*3 + 2] = (byte) ColorConversion.YUV_B;
-
         }
 
         newImage.constituteImage(signal.width, signal.height, "RGB", pixels);
@@ -118,9 +116,9 @@ public class PredictiveCodingOdd {
         {
             for(int j = 0; j < width; j++)
             {
-                signal.Ynew[j] = signal.Yorg[j];
-                signal.Unew[j] = signal.Uorg[j];
-                signal.Vnew[j] = signal.Vorg[j];
+                signal.Ynew[i*width +j] = signal.Yorg[i*width +j];
+                signal.Unew[i*width +j] = signal.Uorg[i*width +j];
+                signal.Vnew[i*width +j] = signal.Vorg[i*width +j];
             }
         }
 
@@ -138,12 +136,8 @@ public class PredictiveCodingOdd {
         signal.Ynew[0] = signal.Yorg[0];
         signal.Ynew[1] = signal.Yorg[1];
 
-            for (int j = 0; j < height*width; j++) //j < width
+            for (int j = 1; j < height*width; j++) //j < width
             {
-                if (j == 0)
-                {
-                    j = 1;
-                }
 
                 // Do computation for Y bin first
                 signal.Ynew[j] = (int) Math.floor(signal.Yorg[j-1]);
@@ -178,12 +172,8 @@ public class PredictiveCodingOdd {
 
         //for (int i = 0; i < height; i++)
         //{
-            for (int j = 0; j < height*width; j++) //j < width
+            for (int j = 2; j < height*width; j++) //j < width
             {
-                if (j == 0) // && i == 0
-                {
-                    j = 2;
-                }
 
                 // Do computation for Y bin first
                 signal.Ynew[j] = (int) Math.floor((signal.Yorg[j-1] + signal.Yorg[j-2])/2);
@@ -213,12 +203,8 @@ public class PredictiveCodingOdd {
         signal.Ynew[0] = signal.Yorg[0];
         signal.Ynew[1] = signal.Yorg[1];
 
-            for (int j = 0; j < height*width; j++) //j < width
+            for (int j = 2; j < height*width; j++) //j < width
             {
-                if (j == 0)
-                {
-                    j = 2;
-                }
 
                 // Do computation for Y bin first
                 signal.Ynew[j] = (int) Math.floor(2*signal.Yorg[j-1] + signal.Yorg[j-2])/3;
@@ -250,12 +236,8 @@ public class PredictiveCodingOdd {
 
 
 
-            for (int j = 0; j < height*width; j++) //j < width
+            for (int j = 2; j < height*width; j++) //j < width
             {
-                if (j == 0)
-                {
-                    j = 2;
-                }
 
                 // Do computation for Y bin first
                 signal.Ynew[j] = (int) Math.floor((signal.Yorg[j-1] + (2*signal.Yorg[j-2]))/3);
@@ -288,12 +270,8 @@ public class PredictiveCodingOdd {
 
 
 
-            for (int j = 0; j < height*width; j++) //j < width
+            for (int j = 10; j < height*width; j++) //j < width
             {
-                if (j == 0)
-                {
-                    j = 10;
-                }
 
 				// Do computation for Y bin first
                 signal.Ynew[j] = (int) Math.floor((signal.Yorg[j-1] + signal.Yorg[j-2]
