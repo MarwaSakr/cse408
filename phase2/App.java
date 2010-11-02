@@ -107,9 +107,19 @@ public class App
                         {
                             case (1): // No Quantization
                                 signalYUV.quantizationFlag = 1;
+                                //Do Nothing
                                 break;
                             case (2): // Uniform Quantization
                                 signalYUV.quantizationFlag = 2;
+                                int yBuck = QuantizeScheme.prompt(QuantizeScheme.Y);
+                                int uBuck = QuantizeScheme.prompt(QuantizeScheme.U);
+                                int VBuck = QuantizeScheme.prompt(QuantizeScheme.V); 
+                                QuantizeScheme scheme = new QuantizeScheme(yBuck,uBuck,vBuck);
+                                for(int x = 0; x++; x<signalYUV.Y.length){
+                                    signalYUV.Y[x] = scheme.quantize(signalYUV.Y[x],QuantizeScheme.Y);
+                                    signalYUV.U[x] = scheme.quantize(signalYUV.U[x],QuantizeScheme.U);
+                                    signalYUV.V[x] = scheme.quantize(signalYUV.V[x],QuantizeScheme.V);
+                                }
                                 break;
                             case (0): // Back to Main Menu
                                 Menu.printMenu();
