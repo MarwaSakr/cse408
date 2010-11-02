@@ -1,5 +1,6 @@
 
 import java.io.Serializable;
+import java.util.Hashtable;
 
 /*
  * To change this template, choose Tools | Templates
@@ -19,6 +20,9 @@ public class YUVSignal implements Serializable {
     public int Ynew[];
     public int Unew[];
     public int Vnew[];
+    public String Ynewencoded[];
+    public String Unewencoded[];
+    public String Vnewencoded[];
     protected int height = 0;
     protected int width = 0;
     protected int orgBits = 0;
@@ -29,6 +33,11 @@ public class YUVSignal implements Serializable {
     public int Yerr[];
     public int Uerr[];
     public int Verr[];
+    
+    //HashTables
+    public Hashtable YHash;
+    public Hashtable UHash;
+    public Hashtable VHash;
 
 
     // Additional flags... (use enum possibly?)

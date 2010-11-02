@@ -7,22 +7,43 @@ public class RunlengthEncoding {
 	private ArrayList<Integer> arraylist_YUV= new ArrayList<Integer>();
 	
 	
-	public ArrayList encode(int[] array) {	
+	public int[] encode(int[] originalYUV) {	
+		int[] RLE;
 		
-		for(int i = 0; i < array.length; i++) {
+		for(int i = 0; i < originalYUV.length; i++) {
 			int runlength = 1;
-			while(i+1 < array.length && array[i] == array[i+1]) {
+			
+			while(i+1 < originalYUV.length && originalYUV[i] == originalYUV[i+1]) {
 				runlength++;
 				i++;
-			}
-			
+			}	
 			arraylist_YUV.add(runlength);
-			arraylist_YUV.add(array[i]);
-			
+			arraylist_YUV.add(originalYUV[i]);		
 		}
 		
-		return arraylist_YUV;
+		RLE = new int[arraylist_YUV.size()];
 		
+		for(int i = 0; i < arraylist_YUV.size(); i++) {
+			RLE[i] = arraylist_YUV.get(i);
+		}
+		
+		return RLE;
 	}
 	
+	public int[] decode(int[] encodedYUV, int originalLength) {
+		int[] decoded = new int[originalLength];
+		int index = 0;
+		
+		for(int i = 0; i< encodedYUV.length; i++) {
+			int freq = encodedYUV[i];
+			while(freq > 0){
+				decoded[index] = encodedYUV[i+1];
+				index++;
+				freq--;
+			}
+			i++;
+		}
+		
+		return decoded;
+	}
 }
