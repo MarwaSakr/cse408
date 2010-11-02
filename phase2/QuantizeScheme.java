@@ -59,4 +59,19 @@ public class QuantizeScheme {
 	    }
         return floor;
     }
+    public static int prompt(int Type){
+        String typeName = "Y";
+        if(Type == 1) typeName = "U";
+        if(Type == 2) typeName = "V";
+        System.out.println("How many Buckets do you want for "+typeName);
+        System.out.print(">");
+        int target = 10;
+        try {
+            target = scan.nextInt();
+        } catch(InputMismatchException ex){
+            scan.next();
+            target = 10;
+        }
+        return target;
+    }
 }
