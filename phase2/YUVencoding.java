@@ -13,11 +13,9 @@ public class YUVencoding {
     public static double yDistortion;
     public static double uDistortion;
     public static double vDistortion;
-    private static int intSize=32;
 
     public static void encodeSignal(YUVSignal signal, HashTable hash) throws FileNotFoundException
     {
-			signal.setSizeOrg(intSize*signal.width * signal.height);
 
             FileDialog fd = new FileDialog( new Frame(),
             "Save As...", FileDialog.SAVE );
@@ -45,8 +43,6 @@ public class YUVencoding {
             } catch (IOException ex) {
                 System.err.println(ex.toString());
             }
-
-            System.out.println("Original Size = "+signal.orgBits+" bits\n New Size = "+signal.newBits+" bits\n");
 
 
     } // end of encodeSignal
