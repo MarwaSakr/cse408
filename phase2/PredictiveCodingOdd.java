@@ -133,8 +133,12 @@ public class PredictiveCodingOdd {
         int height = signal.height;
         int width = signal.width;
 
-        signal.Ynew[0] = signal.Yorg[0];
-        signal.Ynew[1] = signal.Yorg[1];
+        for (int i=0; i<1; i++)
+		        {
+					signal.Ynew[i]=signal.Yorg[i];
+					signal.Unew[i]=signal.Uorg[i];
+					signal.Vnew[i]=signal.Vorg[i];
+		}
 
             for (int j = 1; j < height*width; j++) //j < width
             {
@@ -165,8 +169,12 @@ public class PredictiveCodingOdd {
         int height = signal.height;
         int width = signal.width;
 
-        signal.Ynew[0] = signal.Yorg[0];
-        signal.Ynew[1] = signal.Yorg[1];
+        for (int i=0; i<2; i++)
+		        {
+					signal.Ynew[i]=signal.Yorg[i];
+					signal.Unew[i]=signal.Uorg[i];
+					signal.Vnew[i]=signal.Vorg[i];
+		}
 
         // fn(i, j) = (i-j)*width + (j-1)
 
@@ -200,8 +208,12 @@ public class PredictiveCodingOdd {
         int height = signal.height;
         int width = signal.width;
 
-        signal.Ynew[0] = signal.Yorg[0];
-        signal.Ynew[1] = signal.Yorg[1];
+		for (int i=0; i<2; i++)
+        {
+			signal.Ynew[i]=signal.Yorg[i];
+			signal.Unew[i]=signal.Uorg[i];
+			signal.Vnew[i]=signal.Vorg[i];
+		}
 
             for (int j = 2; j < height*width; j++) //j < width
             {
@@ -231,9 +243,12 @@ public class PredictiveCodingOdd {
         int height = signal.height;
         int width = signal.width;
 
-        signal.Ynew[0] = signal.Yorg[0];
-        signal.Ynew[1] = signal.Yorg[1];
-
+        for (int i=0; i<2; i++)
+        {
+			signal.Ynew[i]=signal.Yorg[i];
+			signal.Unew[i]=signal.Uorg[i];
+			signal.Vnew[i]=signal.Vorg[i];
+		}
 
 
             for (int j = 2; j < height*width; j++) //j < width
@@ -265,7 +280,7 @@ public class PredictiveCodingOdd {
         int height = signal.height;
         int width = signal.width;
 
-        for (int i=0; i<10; i++)
+        for (int i=0; i<9; i++)
         {
 			signal.Ynew[i] = signal.Yorg[i];
 			signal.Unew[i] = signal.Uorg[i];
@@ -293,8 +308,6 @@ public class PredictiveCodingOdd {
 				+ signal.Vorg[j-7] + signal.Vorg[j-8]+ signal.Vorg[j-9] + signal.Vorg[j-10])/10);
                 signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
             }
-
-
     }
 
 }
