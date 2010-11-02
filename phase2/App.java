@@ -10,7 +10,7 @@ import magick.util.*;
 public class App
 {
     public static YUVSignal signalYUV;
-    
+
     public static void main( String[] args )
     {
         System.setProperty ("jmagick.systemclassloader" , "no");
@@ -113,7 +113,7 @@ public class App
                                 signalYUV.quantizationFlag = 2;
                                 int yBuck = QuantizeScheme.prompt(QuantizeScheme.Y);
                                 int uBuck = QuantizeScheme.prompt(QuantizeScheme.U);
-                                int vBuck = QuantizeScheme.prompt(QuantizeScheme.V); 
+                                int vBuck = QuantizeScheme.prompt(QuantizeScheme.V);
                                 QuantizeScheme scheme = new QuantizeScheme(yBuck,uBuck,vBuck);
                                 for(int x = 0;x<signalYUV.Ynew.length;x++){
                                     signalYUV.Ynew[x] = scheme.quantize(signalYUV.Ynew[x],QuantizeScheme.Y);
@@ -202,6 +202,7 @@ public class App
                         //This will act as a debug key. I am using it to test if my
                         // predictive coding is working or not.
                         current_image = PredictiveCodingOdd.constructImage(signalYUV);
+                        System.out.println("Y distortion = "+ YUVencoding.yDistortion+" U distortion = "+ YUVencoding.uDistortion+ " V distortion = "+YUVencoding.vDistortion+" \n");
                     } catch (MagickException ex) {
                         System.err.println(ex.toString());
                     }

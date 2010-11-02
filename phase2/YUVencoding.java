@@ -13,11 +13,12 @@ public class YUVencoding {
     public static double yDistortion;
     public static double uDistortion;
     public static double vDistortion;
+    private static int intSize=32;
 
     public static void encodeSignal(YUVSignal signal, HashTable hash) throws FileNotFoundException
     {
-            //long length;
-            //File file;
+			signal.setSizeOrg(intSize*signal.width * signal.height);
+
             FileDialog fd = new FileDialog( new Frame(),
             "Save As...", FileDialog.SAVE );
             fd.show();
@@ -33,7 +34,7 @@ public class YUVencoding {
                 //ObjectOutput output = new ObjectOutputStream(outStream);
                 try {
                     output.writeObject(signal);
-                    
+
                     if (hash != null) {
                         output.writeObject(hash);
                     }
@@ -44,12 +45,16 @@ public class YUVencoding {
             } catch (IOException ex) {
                 System.err.println(ex.toString());
             }
+
+            System.out.println("Original Size = "+signal.orgBits+" bits\n New Size = "+signal.newBits+" bits\n");
+
+
     } // end of encodeSignal
 
     public static YUVSignal decodeSignal () throws FileNotFoundException, IOException, ClassNotFoundException
     {
         ObjectInputStream input;
-        
+
         // --  New Code
         FileDialog fd = new FileDialog( new Frame(),
             "Open File...", FileDialog.LOAD );
@@ -90,9 +95,9 @@ public class YUVencoding {
          {
              for (int j=0; j<width; j++)
              {
-                 yDistortion+=(double)((retrievedSignal.Yorg[i*width+j]-retrievedSignal.Ynew[i*width+j])^2)/(double)resolution;
-                 uDistortion+=(double)((retrievedSignal.Uorg[i*width+j]-retrievedSignal.Unew[i*width+j])^2)/(double)resolution;
-                 vDistortion+=(double)((retrievedSignal.Vorg[i*width+j]-retrievedSignal.Vnew[i*width+j])^2)/(double)resolution;
+                 yDistortion+=(double)((retrievedSignal.Yorg[i*width+j]-retrievedSignal.Ynew[i*width+j])*(retrievedSignal.Yorg[i*width+j]-retrievedSignal.Ynew[i*width+j]))/(double)resolution;
+                 uDistortion+=(double)((retrievedSignal.Uorg[i*width+j]-retrievedSignal.Unew[i*width+j])*(retrievedSignal.Uorg[i*width+j]-retrievedSignal.Unew[i*width+j]))/(double)resolution;
+                 vDistortion+=(double)((retrievedSignal.Vorg[i*width+j]-retrievedSignal.Vnew[i*width+j])*(retrievedSignal.Vorg[i*width+j]-retrievedSignal.Vnew[i*width+j]))/(double)resolution;
              }
          } // end of for loop
 
