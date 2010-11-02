@@ -12,7 +12,7 @@ public class ColorConversion
 
     public static double YIQ_Y = 0.0, YIQ_I = 0.0, YIQ_Q = 0.0;
     public static double YIQ_R = 0.0, YIQ_G = 0.0, YIQ_B = 0.0;
-    
+
     public static double YUV_Y=0.0, YUV_U=0.0, YUV_V=0.0;
     public static double YUV_R = 0.0, YUV_G = 0.0, YUV_B = 0.0;
 
@@ -49,7 +49,7 @@ public class ColorConversion
         YUV_Y = Math.floor(0.299 * red + 0.587 * green + 0.114 * blue);
         YUV_U = Math.floor(-0.299 * red - 0.587 * green + 0.886 * blue);
         YUV_V = Math.floor(0.701 * red - 0.587 * green - 0.114 * blue);
-        
+
         //System.out.println("RGB->YUV: [" + YUV_Y + ", " + YUV_U + ", " + YUV_V + "].");
     }
 
@@ -125,7 +125,7 @@ public class ColorConversion
                 H *=255;
                 S *=255;
                 L *=255;
-                
+
                 //System.out.println("RGB->HSL: [" + H + ", " + S + ", " + L + "].");
 
         }
@@ -193,7 +193,7 @@ public class ColorConversion
         LAB_a = Math.floor(0.5*(5.000*(x-y)+1.0));
         LAB_b = Math.floor(0.5*(2.000*(y-z)+1.0));
 
-        
+
 
         //System.out.println("XYZ->LAB: [" + LAB_L + ", " + LAB_a + ", " + LAB_b + "].");
 
@@ -202,7 +202,7 @@ public class ColorConversion
 
     public static void LABtoXYZ()
     {
-        
+
         /*double Yn = (LAB_L + 16) / 116;
         double Xn = LAB_a / 500 + Yn;
         double Zn = yLab - LAB_b /200;
@@ -223,7 +223,7 @@ public class ColorConversion
     }
 
     // Works
-    public static void YUVtoRGB(int red, int green, int blue)
+    public static void YUVtoRGB(int y, int u, int v)
     {
         /*
          * R = Y + 1.403V'
@@ -231,12 +231,12 @@ public class ColorConversion
          * B = Y + 1.770U'
          */
 
-        YUV_R = Math.floor(YUV_Y + 1.403*YUV_V);
-        YUV_G = Math.floor(YUV_Y - 0.395*YUV_U - 0.581*YUV_V);
-        YUV_B = Math.floor(YUV_Y + 2.032*YUV_U);
+        YUV_R = Math.floor(y + v);
+        YUV_G = Math.floor(y - 0.194*u - 0.509*v);
+        YUV_B = Math.floor(y + u);
 
         //System.out.println("YUV->RGB: [" + YUV_R + ", " + YUV_G + ", " + YUV_B + "].");
-    }    
+    }
 
     public static void YIQtoRGB()
     {
