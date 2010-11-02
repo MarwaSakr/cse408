@@ -67,12 +67,13 @@ public class PredictiveCodingOdd {
         System.out.println(ColorConversion.YUV_R + " " + ColorConversion.YUV_G + " " + ColorConversion.YUV_B);
 
         // for each Y,U, V value, convert back to RGB, and put them in pixels[]
-        for(int i = 0; i < signal.Ynew.length; i++)
+        for(int i = 0; i < signal.Yorg.length; i++)
         {
-            ColorConversion.YUVtoRGB(signal.Ynew[i], signal.Unew[i], signal.Vnew[i]);
+            ColorConversion.YUVtoRGB(signal.Yorg[i], signal.Uorg[i], signal.Vorg[i]);
             pixels[i*3] = (byte) ColorConversion.YUV_R;
             pixels[i*3 + 1] = (byte) ColorConversion.YUV_G;
             pixels[i*3 + 2] = (byte) ColorConversion.YUV_B;
+
         }
 
         newImage.constituteImage(signal.width, signal.height, "RGB", pixels);
@@ -124,6 +125,41 @@ public class PredictiveCodingOdd {
         }
 
     }
+     /*
+	 * Encode with predictors
+	 * Fn = floor (fn-1)
+	 * En = fn - Fn
+     */
+    public static void differentialPC2(YUVSignal signal) throws MagickException
+    {
+        int height = signal.height;
+        int width = signal.width;
+
+        signal.Ynew[0] = signal.Yorg[0];
+        signal.Ynew[1] = signal.Yorg[1];
+
+            for (int j = 0; j < height*width; j++) //j < width
+            {
+                if (j == 0)
+                {
+                    j = 1;
+                }
+
+                // Do computation for Y bin first
+                signal.Ynew[j] = (int) Math.floor(signal.Yorg[j-1]);
+                signal.Yerr[j] = signal.Yorg[j] - signal.Ynew[j];
+
+                // Do computation for U bin
+                signal.Unew[j] = (int) Math.floor(signal.Uorg[j-1]);
+                signal.Uerr[j] = signal.Uorg[j] - signal.Unew[j];
+
+                // Do computation for V bin
+                signal.Vnew[j] = (int) Math.floor(signal.Vorg[j-1]);
+                signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
+            }
+
+
+    }
 
     /*
      * Encode with predictors
@@ -162,6 +198,122 @@ public class PredictiveCodingOdd {
                 signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
             }
         //}
+
+    }
+ 	/*
+     * Encode with predictors
+     * Fn = floor ( (2*fn-1 + fn-2)/3 )
+     * En = fn - Fn
+     */
+    public static void differentialPC4(YUVSignal signal) throws MagickException
+    {
+        int height = signal.height;
+        int width = signal.width;
+
+        signal.Ynew[0] = signal.Yorg[0];
+        signal.Ynew[1] = signal.Yorg[1];
+
+            for (int j = 0; j < height*width; j++) //j < width
+            {
+                if (j == 0)
+                {
+                    j = 2;
+                }
+
+                // Do computation for Y bin first
+                signal.Ynew[j] = (int) Math.floor(2*signal.Yorg[j-1] + signal.Yorg[j-2])/3;
+                signal.Yerr[j] = signal.Yorg[j] - signal.Ynew[j];
+
+                // Do computation for U bin
+                signal.Unew[j] = (int) Math.floor(2*signal.Uorg[j-1] + signal.Uorg[j-2])/3;
+                signal.Uerr[j] = signal.Uorg[j] - signal.Unew[j];
+
+                // Do computation for V bin
+                signal.Vnew[j] = (int) Math.floor(2*signal.Vorg[j-1] + signal.Vorg[j-2])/3;
+                signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
+            }
+
+
+    }
+ 	/*
+     * Encode with predictors
+     * Fn = floor ( (fn-1 + 2*fn-2)/3 )
+     * En = fn - Fn
+     */
+    public static void differentialPC5(YUVSignal signal) throws MagickException
+    {
+        int height = signal.height;
+        int width = signal.width;
+
+        signal.Ynew[0] = signal.Yorg[0];
+        signal.Ynew[1] = signal.Yorg[1];
+
+
+
+            for (int j = 0; j < height*width; j++) //j < width
+            {
+                if (j == 0)
+                {
+                    j = 2;
+                }
+
+                // Do computation for Y bin first
+                signal.Ynew[j] = (int) Math.floor((signal.Yorg[j-1] + (2*signal.Yorg[j-2]))/3);
+                signal.Yerr[j] = signal.Yorg[j] - signal.Ynew[j];
+
+                // Do computation for U bin
+                signal.Unew[j] = (int) Math.floor((signal.Uorg[j-1] + (2*signal.Uorg[j-2]))/3);
+                signal.Uerr[j] = signal.Uorg[j] - signal.Unew[j];
+
+                // Do computation for V bin
+                signal.Vnew[j] = (int) Math.floor((signal.Vorg[j-1] + (2*signal.Vorg[j-2]))/3);
+                signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
+            }
+
+
+    }
+
+    /*
+     * Encode with predictors
+     * Fn = floor ( (fn-1 + fn-2 + ... + fn-10)/10 )
+     * En = fn - Fn
+     */
+    public static void differentialPC6(YUVSignal signal) throws MagickException
+    {
+        int height = signal.height;
+        int width = signal.width;
+
+        signal.Ynew[0] = signal.Yorg[0];
+        signal.Ynew[1] = signal.Yorg[1];
+
+
+
+            for (int j = 0; j < height*width; j++) //j < width
+            {
+                if (j == 0)
+                {
+                    j = 10;
+                }
+
+				// Do computation for Y bin first
+                signal.Ynew[j] = (int) Math.floor((signal.Yorg[j-1] + signal.Yorg[j-2]
+                + signal.Yorg[j-3] + signal.Yorg[j-4] + signal.Yorg[j-5] + signal.Yorg[j-6]
+                + signal.Yorg[j-7] + signal.Yorg[j-8]+signal.Yorg[j-9] + signal.Yorg[j-10])/10);
+                signal.Yerr[j] = signal.Yorg[j] - signal.Ynew[j];
+
+                // Do computation for U bin
+                signal.Unew[j] = (int) Math.floor((signal.Uorg[j-1] + signal.Uorg[j-2]
+				+ signal.Uorg[j-3] + signal.Uorg[j-4] + signal.Uorg[j-5] + signal.Uorg[j-6]
+				+ signal.Uorg[j-7] + signal.Uorg[j-8]+ signal.Uorg[j-9] + signal.Uorg[j-10])/10);
+                signal.Uerr[j] = signal.Uorg[j] - signal.Unew[j];
+
+                // Do computation for V bin
+                signal.Vnew[j] = (int) Math.floor((signal.Vorg[j-1] + signal.Vorg[j-2]
+				+ signal.Vorg[j-3] + signal.Vorg[j-4] + signal.Vorg[j-5] + signal.Vorg[j-6]
+				+ signal.Vorg[j-7] + signal.Vorg[j-8]+ signal.Vorg[j-9] + signal.Vorg[j-10])/10);
+                signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
+            }
+
 
     }
 
