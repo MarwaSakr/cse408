@@ -231,9 +231,9 @@ public class ColorConversion
          * B = Y + 1.770U'
          */
 
-        YUV_R = Math.floor((double)y + 1.403*(double)v);
-        YUV_G = Math.floor((double)y - 0.395*(double)u - 0.581*(double)v);
-        YUV_B = Math.floor((double)y + 2.032*(double)u);
+        YUV_R = Math.floor(y + v);
+        YUV_G = Math.floor(y - 0.194*u - 0.509*v);
+        YUV_B = Math.floor(y + u);
 
         //System.out.println("YUV->RGB: [" + YUV_R + ", " + YUV_G + ", " + YUV_B + "].");
     }
