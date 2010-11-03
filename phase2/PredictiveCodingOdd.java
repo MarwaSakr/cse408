@@ -69,7 +69,7 @@ public class PredictiveCodingOdd {
         for(int i = 0; i < signal.Ynew.length; i++)
         {
             ColorConversion.YUVtoRGB(signal.Ynew[i], signal.Unew[i], signal.Vnew[i]);
-            pixels[i*3] = (byte) ColorConversion.YUV_R;
+            pixels[i*3] = (byte)ColorConversion.YUV_R;
             pixels[i*3 + 1] = (byte) ColorConversion.YUV_G;
             pixels[i*3 + 2] = (byte) ColorConversion.YUV_B;
         }
