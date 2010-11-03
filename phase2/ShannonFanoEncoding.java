@@ -83,7 +83,7 @@ public class ShannonFanoEncoding {
 		//YUV.setEncodedArray(encodedPixelArray);
 	}
 	
-	public int[] decode(int[] encoded, Hashtable codeTable) {
+	public int[] decode(String[] encoded, Hashtable codeTable) {
 		int[] decodedPixelArray = new int[encoded.length];
 		Enumeration e;
 		
@@ -92,7 +92,7 @@ public class ShannonFanoEncoding {
 			while(e.hasMoreElements()){
 				String value = (String) e.nextElement();
 				String code = (String) codeTable.get(value);
-				if(Integer.valueOf(code) == encoded[i]){
+				if(code.equals(encoded[i])){
 					decodedPixelArray[i] = Integer.valueOf(value);
 				}
 			}
