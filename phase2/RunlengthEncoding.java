@@ -32,7 +32,7 @@ public class RunlengthEncoding {
 		return RLE;
 	}
 
-	public int[] decode(String[] encodedYUV, int originalLength) {
+	public static int[] decode(int[] encodedYUV, int originalLength) {
 		int[] decoded = new int[originalLength];
 		int index = 0;
 
