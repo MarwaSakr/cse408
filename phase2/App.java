@@ -210,27 +210,29 @@ public class App
                             	int[] RL_Y = runlength_YUV.encode(signalYUV.Ynew);
                                 int[] RL_U = runlength_YUV.encode(signalYUV.Unew);
                                 int[] RL_V = runlength_YUV.encode(signalYUV.Vnew);
-                                
+                                System.out.println("Length of YNew:" + RL_Y.length);
+                                System.out.println("Length of Original Array: " + signalYUV.Yorg.length);
                                 System.out.println("-----Before Encoding-----");
 	                            
-	                            total_OriginalY = 32 * signalYUV.Ynew.length;
+	                            total_OriginalY = 32 * signalYUV.Yorg.length;
 	                            System.out.println("Total number of bits of Y: " + total_OriginalY);
 	                            
-	                            total_OriginalU = 32 * signalYUV.Unew.length;
-	                            System.out.println("Total number of bits of Y: " + total_OriginalU);
+	                            total_OriginalU = 32 * signalYUV.Uorg.length;
+	                            System.out.println("Total number of bits of U: " + total_OriginalU);
 	                            
-	                            total_OriginalV = 32 * signalYUV.Vnew.length;
-	                            System.out.println("Total number of bits of Y: " + total_OriginalV);
+	                            total_OriginalV = 32 * signalYUV.Vorg.length;
+	                            System.out.println("Total number of bits of V: " + total_OriginalV);
 	                            
-	                            total_OriginalYUV = 32 * signalYUV.Ynew.length;
-	                            System.out.println("Total number of bits of Y: " + total_OriginalYUV);
+	                            total_OriginalYUV = total_OriginalY + total_OriginalU + total_OriginalV;
+	                            System.out.println("Total number of bits of YUV: " + total_OriginalYUV);
 	                            
                                 signalYUV.Ynew = RL_Y;
                                 signalYUV.Unew = RL_U;
                                 signalYUV.Vnew = RL_V;
                                 
                                 System.out.println("-----After Encoding-----");
-	                            
+	                            System.out.println("Length of YNew:" + signalYUV.Ynew.length);
+	                            System.out.println("Last value at Ynew: " + signalYUV.Ynew[signalYUV.Ynew.length-1]);
 	                            int totalBitsY = 32 * signalYUV.Ynew.length; 
 	                            System.out.println("Total number of bits of Y: " + totalBitsY);
 	                            
@@ -292,17 +294,17 @@ public class App
 	                            
 	                            System.out.println("-----Before Encoding-----");
 	                            
-	                            total_OriginalY = 32 * signalYUV.Ynew.length;
+	                            total_OriginalY = 32 * signalYUV.Yorg.length;
 	                            System.out.println("Total number of bits of Y: " + total_OriginalY);
 	                            
-	                            total_OriginalU = 32 * signalYUV.Unew.length;
-	                            System.out.println("Total number of bits of Y: " + total_OriginalU);
+	                            total_OriginalU = 32 * signalYUV.Uorg.length;
+	                            System.out.println("Total number of bits of U: " + total_OriginalU);
 	                            
-	                            total_OriginalV = 32 * signalYUV.Vnew.length;
-	                            System.out.println("Total number of bits of Y: " + total_OriginalV);
+	                            total_OriginalV = 32 * signalYUV.Vorg.length;
+	                            System.out.println("Total number of bits of V: " + total_OriginalV);
 	                            
-	                            total_OriginalYUV = 32 * signalYUV.Ynew.length;
-	                            System.out.println("Total number of bits of Y: " + total_OriginalYUV);
+	                            total_OriginalYUV = total_OriginalY + total_OriginalU + total_OriginalV;
+	                            System.out.println("Total number of bits of YUV: " + total_OriginalYUV);
 	                            
 	                            System.out.println("-----After Encoding-----");
 	                            
@@ -381,17 +383,17 @@ public class App
 	                            
 	                            System.out.println("-----Before Encoding-----");
 	                            
-	                            total_OriginalY = 32 * signalYUV.Ynew.length;
+	                            total_OriginalY = 32 * signalYUV.Yorg.length;
 	                            System.out.println("Total number of bits of Y: " + total_OriginalY);
 	                            
-	                            total_OriginalU = 32 * signalYUV.Unew.length;
-	                            System.out.println("Total number of bits of Y: " + total_OriginalU);
+	                            total_OriginalU = 32 * signalYUV.Uorg.length;
+	                            System.out.println("Total number of bits of U: " + total_OriginalU);
 	                            
-	                            total_OriginalV = 32 * signalYUV.Vnew.length;
-	                            System.out.println("Total number of bits of Y: " + total_OriginalV);
+	                            total_OriginalV = 32 * signalYUV.Vorg.length;
+	                            System.out.println("Total number of bits of V: " + total_OriginalV);
 	                            
-	                            total_OriginalYUV = 32 * signalYUV.Ynew.length;
-	                            System.out.println("Total number of bits of Y: " + total_OriginalYUV);
+	                            total_OriginalYUV = total_OriginalY + total_OriginalU + total_OriginalV;
+	                            System.out.println("Total number of bits of YUV: " + total_OriginalYUV);
 	                            
 	                            System.out.println("-----After Encoding-----");
 	                            
