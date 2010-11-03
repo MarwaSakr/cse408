@@ -58,8 +58,6 @@ public class PredictiveCodingOdd {
         
         if (signal.predictiveCodingFlag != 1)
         {
-            //signal.Ynew[0] = signal.Ynew[0];
-            //signal.Ynew[1] = signal.Ynew[1];
             for (int i = 1; i < signal.Ynew.length; i++)
             {
                 signal.Ynew[i] += signal.Yerr[i];
@@ -120,6 +118,10 @@ public class PredictiveCodingOdd {
                 signal.Ynew[i*width +j] = signal.Yorg[i*width +j];
                 signal.Unew[i*width +j] = signal.Uorg[i*width +j];
                 signal.Vnew[i*width +j] = signal.Vorg[i*width +j];
+                
+                signal.Yquant[i*width + j] = (float) signal.Ynew[i*width + j];
+                signal.Uquant[i*width + j] = (float) signal.Unew[i*width + j];
+                signal.Vquant[i*width + j] = (float) signal.Vnew[i*width + j];
             }
         }
 
@@ -135,27 +137,37 @@ public class PredictiveCodingOdd {
         int width = signal.width;
 
         for (int i=0; i<1; i++)
-		        {
-					signal.Ynew[i]=signal.Yorg[i];
-					signal.Unew[i]=signal.Uorg[i];
-					signal.Vnew[i]=signal.Vorg[i];
+        {
+			signal.Ynew[i]=signal.Yorg[i];
+			signal.Unew[i]=signal.Uorg[i];
+			signal.Vnew[i]=signal.Vorg[i];
+			
+			signal.Yquant[i] = (float) signal.Yorg[i];
+			signal.Uquant[i] = (float) signal.Uorg[i];
+			signal.Vquant[i] = (float) signal.Vorg[i];
 		}
 
-            for (int j = 1; j < height*width; j++) //j < width
-            {
+        for (int j = 1; j < height*width; j++) //j < width
+        {
 
-                // Do computation for Y bin first
-                signal.Ynew[j] = (int) Math.floor(signal.Yorg[j-1]);
-                signal.Yerr[j] = signal.Yorg[j] - signal.Ynew[j];
+            // Do computation for Y bin first
+            //signal.Ynew[j] = (int) Math.floor(signal.Yorg[j-1]);
+            signal.Yquant[j] = (float) Math.floor(signal.Yorg[j-1]);
+            signal.Ynew[j] = (int) signal.Ynew[j];
+            signal.Yerr[j] = signal.Yorg[j] - signal.Ynew[j];
 
-                // Do computation for U bin
-                signal.Unew[j] = (int) Math.floor(signal.Uorg[j-1]);
-                signal.Uerr[j] = signal.Uorg[j] - signal.Unew[j];
+            // Do computation for U bin
+            //signal.Unew[j] = (int) Math.floor(signal.Uorg[j-1]);
+            signal.Uquant[j] = (float) Math.floor(signal.Uorg[j-1]);
+            signal.Unew[j] = (int) signal.Unew[j];
+            signal.Uerr[j] = signal.Uorg[j] - signal.Unew[j];
 
-                // Do computation for V bin
-                signal.Vnew[j] = (int) Math.floor(signal.Vorg[j-1]);
-                signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
-            }
+            // Do computation for V bin
+            //signal.Vnew[j] = (int) Math.floor(signal.Vorg[j-1]);
+            signal.Vquant[j] = (float) Math.floor(signal.Vorg[j-1]);
+            signal.Vnew[j] = (int) signal.Vnew[j];
+            signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
+        }
 
 
     }
@@ -171,33 +183,36 @@ public class PredictiveCodingOdd {
         int width = signal.width;
 
         for (int i=0; i<2; i++)
-		        {
-					signal.Ynew[i]=signal.Yorg[i];
-					signal.Unew[i]=signal.Uorg[i];
-					signal.Vnew[i]=signal.Vorg[i];
+        {
+			signal.Ynew[i]=signal.Yorg[i];
+			signal.Unew[i]=signal.Uorg[i];
+			signal.Vnew[i]=signal.Vorg[i];
+			
+			signal.Yquant[i] = (float) signal.Yorg[i];
+			signal.Uquant[i] = (float) signal.Uorg[i];
+			signal.Vquant[i] = (float) signal.Vorg[i];
 		}
 
-        // fn(i, j) = (i-j)*width + (j-1)
+        for (int j = 2; j < height*width; j++) //j < width
+        {
+            // Do computation for Y bin first
+            //signal.Ynew[j] = (int) Math.floor((signal.Yorg[j-1] + signal.Yorg[j-2])/2);
+            signal.Yquant[j] = (float) Math.floor((signal.Yorg[j-1] + signal.Yorg[j-2])/2);
+            signal.Ynew[j] = (int) signal.Yquant[j];
+            signal.Yerr[j] = signal.Yorg[j] - signal.Ynew[j];
 
-        //for (int i = 0; i < height; i++)
-        //{
-            for (int j = 2; j < height*width; j++) //j < width
-            {
-                // Do computation for Y bin first
-                signal.Ynew[j] = (int) Math.floor((signal.Yorg[j-1] + signal.Yorg[j-2])/2);
-                signal.Yerr[j] = signal.Yorg[j] - signal.Ynew[j];
+            // Do computation for U bin
+            //signal.Unew[j] = (int) Math.floor((signal.Uorg[j-1] + signal.Uorg[j-2])/2);
+            signal.Uquant[j] = (float) Math.floor((signal.Uorg[j-1] + signal.Uorg[j-2])/2);
+            signal.Unew[j] = (int) signal.Uquant[j];
+            signal.Uerr[j] = signal.Uorg[j] - signal.Unew[j];
 
-                // Do computation for U bin
-                signal.Unew[j] = (int) Math.floor((signal.Uorg[j-1] + signal.Uorg[j-2])/2);
-                signal.Uerr[j] = signal.Uorg[j] - signal.Unew[j];
-
-                // Do computation for V bin
-                signal.Vnew[j] = (int) Math.floor((signal.Vorg[j-1] + signal.Vorg[j-2])/2);
-                signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
-            }
-            
-        //}
-
+            // Do computation for V bin
+            //signal.Vnew[j] = (int) Math.floor((signal.Vorg[j-1] + signal.Vorg[j-2])/2);
+            signal.Vquant[j] = (float) Math.floor((signal.Vorg[j-1] + signal.Vorg[j-2])/2);
+            signal.Vnew[j] = (int) signal.Vquant[j];
+            signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
+        }
     }
     
  	/*
@@ -215,23 +230,30 @@ public class PredictiveCodingOdd {
 			signal.Ynew[i]=signal.Yorg[i];
 			signal.Unew[i]=signal.Uorg[i];
 			signal.Vnew[i]=signal.Vorg[i];
+			
+			signal.Yquant[i] = (float) signal.Yorg[i];
+			signal.Uquant[i] = (float) signal.Uorg[i];
+			signal.Vquant[i] = (float) signal.Vorg[i];
 		}
 
-            for (int j = 2; j < height*width; j++) //j < width
-            {
+        for (int j = 2; j < height*width; j++) //j < width
+        {
 
-                // Do computation for Y bin first
-                signal.Ynew[j] = (int) Math.floor(2*signal.Yorg[j-1] + signal.Yorg[j-2])/3;
-                signal.Yerr[j] = signal.Yorg[j] - signal.Ynew[j];
+            // Do computation for Y bin first
+            signal.Yquant[j] = (float) Math.floor(2*signal.Yorg[j-1] + signal.Yorg[j-2])/3;
+            signal.Ynew[j] = (int) signal.Yquant[j];
+            signal.Yerr[j] = signal.Yorg[j] - signal.Ynew[j];
 
-                // Do computation for U bin
-                signal.Unew[j] = (int) Math.floor(2*signal.Uorg[j-1] + signal.Uorg[j-2])/3;
-                signal.Uerr[j] = signal.Uorg[j] - signal.Unew[j];
+            // Do computation for U bin
+            signal.Uquant[j] = (float) Math.floor(2*signal.Uorg[j-1] + signal.Uorg[j-2])/3;
+            signal.Unew[j] = (int) signal.Uquant[j];
+            signal.Uerr[j] = signal.Uorg[j] - signal.Unew[j];
 
-                // Do computation for V bin
-                signal.Vnew[j] = (int) Math.floor(2*signal.Vorg[j-1] + signal.Vorg[j-2])/3;
-                signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
-            }
+            // Do computation for V bin
+            signal.Vquant[j] = (float) Math.floor(2*signal.Vorg[j-1] + signal.Vorg[j-2])/3;
+            signal.Vnew[j] = (int) signal.Vquant[j];
+            signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
+        }
 
 
     }
@@ -250,24 +272,31 @@ public class PredictiveCodingOdd {
 			signal.Ynew[i]=signal.Yorg[i];
 			signal.Unew[i]=signal.Uorg[i];
 			signal.Vnew[i]=signal.Vorg[i];
+			
+			signal.Yquant[i] = (float) signal.Yorg[i];
+			signal.Uquant[i] = (float) signal.Uorg[i];
+			signal.Vquant[i] = (float) signal.Vorg[i];
 		}
 
 
-            for (int j = 2; j < height*width; j++) //j < width
-            {
+        for (int j = 2; j < height*width; j++) //j < width
+        {
 
-                // Do computation for Y bin first
-                signal.Ynew[j] = (int) Math.floor((signal.Yorg[j-1] + (2*signal.Yorg[j-2]))/3);
-                signal.Yerr[j] = signal.Yorg[j] - signal.Ynew[j];
+            // Do computation for Y bin first
+            signal.Yquant[j] = (float) Math.floor((signal.Yorg[j-1] + (2*signal.Yorg[j-2]))/3);
+            signal.Ynew[j] = (int) signal.Yquant[j];
+            signal.Yerr[j] = signal.Yorg[j] - signal.Ynew[j];
 
-                // Do computation for U bin
-                signal.Unew[j] = (int) Math.floor((signal.Uorg[j-1] + (2*signal.Uorg[j-2]))/3);
-                signal.Uerr[j] = signal.Uorg[j] - signal.Unew[j];
+            // Do computation for U bin
+            signal.Uquant[j] = (float) Math.floor((signal.Uorg[j-1] + (2*signal.Uorg[j-2]))/3);
+            signal.Unew[j] = (int) signal.Uquant[j];
+            signal.Uerr[j] = signal.Uorg[j] - signal.Unew[j];
 
-                // Do computation for V bin
-                signal.Vnew[j] = (int) Math.floor((signal.Vorg[j-1] + (2*signal.Vorg[j-2]))/3);
-                signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
-            }
+            // Do computation for V bin
+            signal.Vquant[j] = (float) Math.floor((signal.Vorg[j-1] + (2*signal.Vorg[j-2]))/3);
+            signal.Vnew[j] = (int) signal.Vquant[j];
+            signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
+        }
 
 
     }
@@ -287,29 +316,36 @@ public class PredictiveCodingOdd {
 			signal.Ynew[i] = signal.Yorg[i];
 			signal.Unew[i] = signal.Uorg[i];
 			signal.Vnew[i] = signal.Vorg[i];
+			
+			signal.Yquant[i] = (float) signal.Yorg[i];
+			signal.Uquant[i] = (float) signal.Uorg[i];
+			signal.Vquant[i] = (float) signal.Vorg[i];
 		}
 
-            for (int j = 10; j < height*width; j++) //j < width
-            {
+        for (int j = 10; j < height*width; j++) //j < width
+        {
 
-				// Do computation for Y bin first
-                signal.Ynew[j] = (int) Math.floor((signal.Yorg[j-1] + signal.Yorg[j-2]
-                + signal.Yorg[j-3] + signal.Yorg[j-4] + signal.Yorg[j-5] + signal.Yorg[j-6]
-                + signal.Yorg[j-7] + signal.Yorg[j-8]+signal.Yorg[j-9] + signal.Yorg[j-10])/10);
-                signal.Yerr[j] = signal.Yorg[j] - signal.Ynew[j];
+			// Do computation for Y bin first
+            signal.Yquant[j] = (float) Math.floor((signal.Yorg[j-1] + signal.Yorg[j-2]
+            + signal.Yorg[j-3] + signal.Yorg[j-4] + signal.Yorg[j-5] + signal.Yorg[j-6]
+            + signal.Yorg[j-7] + signal.Yorg[j-8]+signal.Yorg[j-9] + signal.Yorg[j-10])/10);
+            signal.Ynew[j] = (int) signal.Yquant[j];
+            signal.Yerr[j] = signal.Yorg[j] - signal.Ynew[j];
 
-                // Do computation for U bin
-                signal.Unew[j] = (int) Math.floor((signal.Uorg[j-1] + signal.Uorg[j-2]
-				+ signal.Uorg[j-3] + signal.Uorg[j-4] + signal.Uorg[j-5] + signal.Uorg[j-6]
-				+ signal.Uorg[j-7] + signal.Uorg[j-8]+ signal.Uorg[j-9] + signal.Uorg[j-10])/10);
-                signal.Uerr[j] = signal.Uorg[j] - signal.Unew[j];
+            // Do computation for U bin
+            signal.Uquant[j] = (float) Math.floor((signal.Uorg[j-1] + signal.Uorg[j-2]
+			+ signal.Uorg[j-3] + signal.Uorg[j-4] + signal.Uorg[j-5] + signal.Uorg[j-6]
+			+ signal.Uorg[j-7] + signal.Uorg[j-8]+ signal.Uorg[j-9] + signal.Uorg[j-10])/10);
+			signal.Unew[j] = (int) signal.Uquant[j];
+            signal.Uerr[j] = signal.Uorg[j] - signal.Unew[j];
 
-                // Do computation for V bin
-                signal.Vnew[j] = (int) Math.floor((signal.Vorg[j-1] + signal.Vorg[j-2]
-				+ signal.Vorg[j-3] + signal.Vorg[j-4] + signal.Vorg[j-5] + signal.Vorg[j-6]
-				+ signal.Vorg[j-7] + signal.Vorg[j-8]+ signal.Vorg[j-9] + signal.Vorg[j-10])/10);
-                signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
-            }
+            // Do computation for V bin
+            signal.Vquant[j] = (float) Math.floor((signal.Vorg[j-1] + signal.Vorg[j-2]
+			+ signal.Vorg[j-3] + signal.Vorg[j-4] + signal.Vorg[j-5] + signal.Vorg[j-6]
+			+ signal.Vorg[j-7] + signal.Vorg[j-8]+ signal.Vorg[j-9] + signal.Vorg[j-10])/10);
+			signal.Vnew[j] = (int) signal.Vquant[j];
+            signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
+        }
     }
 
 }

@@ -141,6 +141,11 @@ public class App
                         {
                             case (1): // No Quantization
                                 signalYUV.quantizationFlag = 1;
+                                for(int x = 0;x<signalYUV.Ynew.length;x++){
+                                    signalYUV.Ynew[x] = (int)signalYUV.Yquant[x];
+                                    signalYUV.Unew[x] = (int)signalYUV.Uquant[x];
+                                    signalYUV.Vnew[x] = (int)signalYUV.Vquant[x];
+                                }
                                 //Do Nothing
                                 break;
                             case (2): // Uniform Quantization
@@ -150,9 +155,9 @@ public class App
                                 int vBuck = QuantizeScheme.prompt(QuantizeScheme.V);
                                 QuantizeScheme scheme = new QuantizeScheme(yBuck,uBuck,vBuck);
                                 for(int x = 0;x<signalYUV.Ynew.length;x++){
-                                    signalYUV.Ynew[x] = scheme.quantize(signalYUV.Ynew[x],QuantizeScheme.Y);
-                                    signalYUV.Unew[x] = scheme.quantize(signalYUV.Unew[x],QuantizeScheme.U);
-                                    signalYUV.Vnew[x] = scheme.quantize(signalYUV.Vnew[x],QuantizeScheme.V);
+                                    signalYUV.Ynew[x] = scheme.quantize(signalYUV.Yquant[x],QuantizeScheme.Y);
+                                    signalYUV.Unew[x] = scheme.quantize(signalYUV.Uquant[x],QuantizeScheme.U);
+                                    signalYUV.Vnew[x] = scheme.quantize(signalYUV.Vquant[x],QuantizeScheme.V);
                                 }
                                 break;
                             case (0): // Back to Main Menu
