@@ -14,7 +14,7 @@ public class YUVencoding {
     public static double uDistortion;
     public static double vDistortion;
 
-    public static void encodeSignal(YUVSignal signal, HashTable hash) throws FileNotFoundException
+    public static void encodeSignal(YUVSignal signal) throws FileNotFoundException
     {
 
             FileDialog fd = new FileDialog( new Frame(),
@@ -23,19 +23,10 @@ public class YUVencoding {
             filePath = new String( fd.getDirectory() + fd.getFile()+".YUV" );
 
             try {
-                // Ryan's Code
                 ObjectOutputStream output = new ObjectOutputStream( new FileOutputStream( filePath ) );
-                // My Code
-                //OutputStream fos = new FileOutputStream (filePath);
-                //file =new File(filePath); //is this needed?
-                //OutputStream outStream = new BufferedOutputStream( fos );
-                //ObjectOutput output = new ObjectOutputStream(outStream);
+
                 try {
                     output.writeObject(signal);
-
-                    if (hash != null) {
-                        output.writeObject(hash);
-                    }
                 } finally {
                     if (output != null)
                     output.close();
@@ -57,13 +48,8 @@ public class YUVencoding {
             fd.show();
             filePath = new String( fd.getDirectory() + fd.getFile());
 
-        System.out.println(filePath);
+        //System.out.println(filePath);
 
-        // My Code
-        //InputStream fis = new FileInputStream(filePath);
-        //InputStream inStream = new BufferedInputStream(fis);
-        //ObjectInput input = new ObjectInputStream(inStream);
-        //retrievedSignal = (YUVSignal)input.readObject();
 
         // Ryan's Code
         try {
@@ -79,8 +65,28 @@ public class YUVencoding {
             System.err.println(ex.toString());
         }
 
-        // --
+        // -- Check type of encoding to rebuild YUVSignal
 
+        if(retrievedSignal.encodingFlag == 2)
+        {
+			retrievedSignal.Ynew = RunlengthEncoding.decode(retrievedSignal.Ynewencoded, retrievedSignal.Yorg.length); // Is this right?
+			retrievedSignal.Unew = RunlengthEncoding.decode(retrievedSignal.Unewencoded, retrievedSignal.Uorg.length);
+			retrievedSignal.Vnew = RunlengthEncoding.decode(retrievedSignal.Vnewencoded, retrievedSignal.Vorg.length);
+		}
+		else if (retrievedSignal.encodingFlag == 3)
+		{
+			retrievedSignal.Ynew = ShannonFanoEncoding.decode(retrievedSignal.Ynewencoded, retrievedSignal.YHash);
+			retrievedSignal.Unew = ShannonFanoEncoding.decode(retrievedSignal.Unewencoded, retrievedSignal.UHash);
+			retrievedSignal.Vnew = ShannonFanoEncoding.decode(retrievedSignal.Vnewencoded, retrievedSignal.VHash);
+		}
+		else if (retrievedSignal.encodingFlag == 4)
+		{
+			retrievedSignal.Ynew = HuffmanEncoding.decode(retrievedSignal.Ynewencoded, retrievedSignal.YHash);
+			retrievedSignal.Unew = HuffmanEncoding.decode(retrievedSignal.Unewencoded, retrievedSignal.UHash);
+			retrievedSignal.Vnew = HuffmanEncoding.decode(retrievedSignal.Vnewencoded, retrievedSignal.VHash);
+		}
+
+		// -- Signal has been reconstructed. Find error and return signal
 
 
          int resolution=retrievedSignal.height*retrievedSignal.width;
