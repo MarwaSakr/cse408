@@ -17,13 +17,13 @@ public class RunlengthEncoding {
 				runlength++;
 				i++;
 			}
-			System.out.println("Runlength:"+runlength+" symbol:"+originalYUV[i]);	
+			//System.out.println("Runlength:"+runlength+" symbol:"+originalYUV[i]);	
 			arraylist_YUV.add(runlength);
 			arraylist_YUV.add(originalYUV[i]);		
 		}
 		
 		RLE = new int[arraylist_YUV.size()];
-		System.out.println("arrraylist size: " + arraylist_YUV.size());
+		//System.out.println("arrraylist size: " + arraylist_YUV.size());
 		
 		for(int i = 0; i < arraylist_YUV.size(); i++) {
 			RLE[i] = arraylist_YUV.get(i);

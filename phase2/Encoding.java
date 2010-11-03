@@ -39,14 +39,16 @@ public class Encoding {
 			records.add(temp);
 		}
 		
-		// Print out frequency hash table 
-		
-		/*Enumeration e = freq_Hash.keys();
+		//Print out frequency hash table 
+		/*
+		System.out.println("-------------");
+		Enumeration e = freq_Hash.keys();
 		while( e. hasMoreElements() ){
 			String value = (String) e.nextElement();
 			Integer frequency = (Integer) freq_Hash.get(value);
 			System.out.println("Value: " + value + " Frequency: " + frequency);
-		}*/		
+		}
+		System.out.println("-------------");	*/
 		
 		return records;
 	}

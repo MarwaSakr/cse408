@@ -171,7 +171,7 @@ public class App
 
                         HuffmanEncoding huffman;
                         
-                        Encoding encode = new Encoding();
+                        
                         
                         int total_OriginalY = 0;
                         int total_OriginalU = 0;
@@ -204,14 +204,20 @@ public class App
                             	signalYUV.encodingFlag = 1;
                                 break;
                             case (2): // Run-length Encoding
+                            
+                                Encoding encodeRunY = new Encoding();
+                                Encoding encodeRunU = new Encoding();
+                                Encoding encodeRunV = new Encoding();
+                                
                             	signalYUV.encodingFlag = 2;
                             	runlength_YUV = new RunlengthEncoding();
                             	
                             	int[] RL_Y = runlength_YUV.encode(signalYUV.Ynew);
                                 int[] RL_U = runlength_YUV.encode(signalYUV.Unew);
                                 int[] RL_V = runlength_YUV.encode(signalYUV.Vnew);
-                                System.out.println("Length of YNew:" + RL_Y.length);
-                                System.out.println("Length of Original Array: " + signalYUV.Yorg.length);
+                                
+                                //System.out.println("Length of YNew:" + RL_Y.length);
+                                //System.out.println("Length of Original Array: " + signalYUV.Yorg.length);
                                 System.out.println("-----Before Encoding-----");
 	                            
 	                            total_OriginalY = 32 * signalYUV.Yorg.length;
@@ -231,8 +237,8 @@ public class App
                                 signalYUV.Vnew = RL_V;
                                 
                                 System.out.println("-----After Encoding-----");
-	                            System.out.println("Length of YNew:" + signalYUV.Ynew.length);
-	                            System.out.println("Last value at Ynew: " + signalYUV.Ynew[signalYUV.Ynew.length-1]);
+	                            //System.out.println("Length of YNew:" + signalYUV.Ynew.length);
+	                            //System.out.println("Last value at Ynew: " + signalYUV.Ynew[signalYUV.Ynew.length-1]);
 	                            int totalBitsY = 32 * signalYUV.Ynew.length; 
 	                            System.out.println("Total number of bits of Y: " + totalBitsY);
 	                            
@@ -248,6 +254,11 @@ public class App
                                 
                                 break;
                             case (3): // Shannon-Fano coding
+                            
+                                Encoding encodeSFY = new Encoding();
+                                Encoding encodeSFU = new Encoding();
+                                Encoding encodeSFV = new Encoding();
+                                
                             	signalYUV.encodingFlag = 3;
                             
 	                            shannon = new ShannonFanoEncoding();
@@ -268,14 +279,23 @@ public class App
                                     conversionV[i] = String.valueOf(signalYUV.Vnew[i]);
 	                            }
 	                            
-	                            records_Y = encode.findFrequency(conversionY);
-	                            records_U = encode.findFrequency(conversionU);
-	                            records_V = encode.findFrequency(conversionV);
+	                            //System.out.println("Y Frequency");
+	                            records_Y = encodeSFY.findFrequency(conversionY);
+	                            //System.out.println("U Frequency");
+	                            records_U = encodeSFU.findFrequency(conversionU);
+	                            //System.out.println("V Frequency");
+	                            records_V = encodeSFV.findFrequency(conversionV);
+	                            
+	                            /*
+	                            for(int i = 0; i < records_Y.size(); i++) {
+	                                System.out.println(records_Y.get(i));
+	                            }*/
 	                            
 	                            Collections.sort(records_Y);
 	                            Collections.sort(records_U);
-	                            Collections.sort(records_V);
-	
+	                            Collections.sort(records_V);                
+	                            
+	                            
 	                            for(int i = 0; i < records_Y.size(); i++) {
                                     total_Y += records_Y.get(i).getFrequency();
 	                            }
@@ -311,7 +331,7 @@ public class App
 	                            int totalBitsY1 = shannon.calculateTotalBits(records_Y);
 	                            System.out.println("Total number of bits of Y: " + totalBitsY1);
 	                            
-	                            int totalBitsU1 = shannon.calculateTotalBits(records_Y);
+	                            int totalBitsU1 = shannon.calculateTotalBits(records_U);
 	                            System.out.println("Total number of bits of U: " + totalBitsU1);
 	                            
 	                            int totalBitsV1 = shannon.calculateTotalBits(records_V);
@@ -319,6 +339,7 @@ public class App
 	                            
 	                            int totalBitsYUV1 = totalBitsY1 + totalBitsU1 + totalBitsV1;
 	                            System.out.println("Total number of bits of YUV: " + totalBitsYUV1);
+	                           
 	
 	                            shannonCodeTable_Y = shannon.buildCodeTable(records_Y, shannonCodeTable_Y);
 	                            shannonCodeTable_U = shannon.buildCodeTable(records_U, shannonCodeTable_U);
@@ -335,6 +356,11 @@ public class App
                                 break;
                                 
                             case (4): // Huffman coding
+                            
+                                Encoding encodeHCY = new Encoding();
+                                Encoding encodeHCU = new Encoding();
+                                Encoding encodeHCV = new Encoding();
+                                
                             	signalYUV.encodingFlag = 4;
                             
                             	Hashtable huffmanCodeTable_Y = new Hashtable();
@@ -353,9 +379,9 @@ public class App
                                     conversionV[i] = String.valueOf(signalYUV.Vnew[i]);
 	                            }    
 	                            
-	                            records_Y = encode.findFrequency(conversionY);
-	                            records_U = encode.findFrequency(conversionU);
-	                            records_V = encode.findFrequency(conversionV);
+	                            records_Y = encodeHCY.findFrequency(conversionY);
+	                            records_U = encodeHCU.findFrequency(conversionU);
+	                            records_V = encodeHCV.findFrequency(conversionV);
 	                            
 	                            Collections.sort(records_Y);
 	                            Collections.sort(records_U);
