@@ -23,17 +23,6 @@ public class PredictiveCodingOdd {
 
             signal = new YUVSignal(image.getDimension().width, image.getDimension().height);
 
-            //temp = image.getOnePixel(0,0);
-            //System.out.println("Red: " + (int) Math.floor(temp.getRed()/256));
-            //System.out.println("Green: " + (int) Math.floor(temp.getGreen()/256));
-            //System.out.println("Blue: " + (int) Math.floor(temp.getBlue()/256));
-
-            //ColorConversion.RGBtoYUV((int) Math.floor(temp.getRed()/256), (int) Math.floor(temp.getRed()/256), (int) Math.floor(temp.getRed()/256));
-
-            //System.out.println("Y: " + (int) ColorConversion.YUV_Y);
-            //System.out.println("U: " + (int) ColorConversion.YUV_U);
-            //System.out.println("Y: " + (int) ColorConversion.YUV_V);
-
             // do conversions by hand via ColorConversion class.
             for(int i = 0; i < signal.height; i++)
             {
@@ -45,6 +34,10 @@ public class PredictiveCodingOdd {
                     signal.Yorg[count] = (int) ColorConversion.YUV_Y;
                     signal.Uorg[count] = (int) ColorConversion.YUV_U;
                     signal.Vorg[count] = (int) ColorConversion.YUV_V;
+                    
+                    signal.Ynew[count] = signal.Yorg[count];
+                    signal.Unew[count] = signal.Uorg[count];
+                    signal.Vnew[count] = signal.Vorg[count];
                     count++;
 
                 }
@@ -62,8 +55,16 @@ public class PredictiveCodingOdd {
     {
         MagickImage newImage = new MagickImage();
         byte pixels[] = new byte[signal.height*signal.width*3]; // no alpha channel
-
-        ColorConversion.YUVtoRGB(signal.Yorg[0], signal.Uorg[0], signal.Vorg[0]);
+        
+        if (signal.predictiveCodingFlag != 1)
+        {
+            //signal.Ynew[0] = signal.Ynew[0];
+            //signal.Ynew[1] = signal.Ynew[1];
+            for (int i = 1; i < signal.Ynew.length; i++)
+            {
+                signal.Ynew[i] += signal.Yerr[i];
+            }
+        }
 
         // for each Y,U, V value, convert back to RGB, and put them in pixels[]
         for(int i = 0; i < signal.Ynew.length; i++)
@@ -163,7 +164,7 @@ public class PredictiveCodingOdd {
      * Encode with predictors
      * Fn = floor ( (fn-1 + fn-2)/2 )
      * En = fn - Fn
-     */
+    */ 
     public static void differentialPC3(YUVSignal signal) throws MagickException
     {
         int height = signal.height;
@@ -182,7 +183,6 @@ public class PredictiveCodingOdd {
         //{
             for (int j = 2; j < height*width; j++) //j < width
             {
-
                 // Do computation for Y bin first
                 signal.Ynew[j] = (int) Math.floor((signal.Yorg[j-1] + signal.Yorg[j-2])/2);
                 signal.Yerr[j] = signal.Yorg[j] - signal.Ynew[j];
@@ -195,9 +195,11 @@ public class PredictiveCodingOdd {
                 signal.Vnew[j] = (int) Math.floor((signal.Vorg[j-1] + signal.Vorg[j-2])/2);
                 signal.Verr[j] = signal.Vorg[j] - signal.Vnew[j];
             }
+            
         //}
 
     }
+    
  	/*
      * Encode with predictors
      * Fn = floor ( (2*fn-1 + fn-2)/3 )

@@ -194,6 +194,7 @@ public class App
                         System.out.print(">");
                         try{
                             option = scan.nextInt();
+
                         } catch(InputMismatchException ex){
                             scan.next();
                             option = -1;
@@ -477,6 +478,9 @@ public class App
                         if (current_image == null){
                             System.out.println("Please Select an image");
                         } else {
+                            try{
+                                current_image = PredictiveCodingOdd.constructImage(signalYUV);
+                            } catch(Exception ex){}
                             ImageUtil.display_image(current_image);
                         }
                         break;
@@ -488,7 +492,7 @@ public class App
                     try {
                         //This will act as a debug key. I am using it to test if my
                         // predictive coding is working or not.
-                        current_image = PredictiveCodingOdd.constructImage(signalYUV);
+                        //current_image = PredictiveCodingOdd.constructImage(signalYUV);
 
                         int width = signalYUV.width;
   			            int height = signalYUV.height;
@@ -506,7 +510,7 @@ public class App
                         System.out.println("Y distortion = "+ yDistortion+" U distortion = "+ uDistortion+ " V distortion = "+ vDistortion+" \n");
                         signalYUV.setSizeOrg(intSize*signalYUV.width * signalYUV.height);
                         System.out.println("Original Size = "+signalYUV.orgBits+" bits\n New Size = "+signalYUV.newBits+" bits\n");
-                    } catch (MagickException ex) {
+                    } catch (Exception ex) {
                         System.err.println(ex.toString());
                     }
                     if (current_image == null){
