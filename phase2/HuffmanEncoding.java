@@ -36,7 +36,7 @@ public class HuffmanEncoding {
 		return huffman;
 	}
 
-	public void traverse(Record huffmanRecord, String s, Hashtable codeTable) {
+	public Hashtable traverse(Record huffmanRecord, String s, Hashtable codeTable) {
 
 		if(!huffmanRecord.isLeaf()) {
 			traverse(huffmanRecord.left, s + "0", codeTable);
@@ -45,6 +45,8 @@ public class HuffmanEncoding {
 		} else {
 			codeTable.put(huffmanRecord.getValue(), s);
 		}
+
+		return codeTable;
 	}
 
 	public String[] encode(int[] original, Hashtable codeTable) {

@@ -1,5 +1,7 @@
 import java.io.*;
 import java.awt.*;
+import java.util.Hashtable;
+import java.util.Enumeration;
 
 /**
  *
@@ -69,9 +71,9 @@ public class YUVencoding {
 
         if(retrievedSignal.encodingFlag == 2)
         {
-			retrievedSignal.Ynew = RunlengthEncoding.decode(retrievedSignal.Ynewencoded, retrievedSignal.Yorg.length); // Is this right?
-			retrievedSignal.Unew = RunlengthEncoding.decode(retrievedSignal.Unewencoded, retrievedSignal.Uorg.length);
-			retrievedSignal.Vnew = RunlengthEncoding.decode(retrievedSignal.Vnewencoded, retrievedSignal.Vorg.length);
+			retrievedSignal.Ynew = RunlengthEncoding.decode(retrievedSignal.Ynew, retrievedSignal.Yorg.length); // Is this right?
+			retrievedSignal.Unew = RunlengthEncoding.decode(retrievedSignal.Unew, retrievedSignal.Uorg.length);
+			retrievedSignal.Vnew = RunlengthEncoding.decode(retrievedSignal.Vnew, retrievedSignal.Vorg.length);
 		}
 		else if (retrievedSignal.encodingFlag == 3)
 		{
