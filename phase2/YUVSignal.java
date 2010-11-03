@@ -20,6 +20,9 @@ public class YUVSignal implements Serializable {
     public int Ynew[];
     public int Unew[];
     public int Vnew[];
+    public float Yquant[];
+    public float Uquant[];
+    public float Vquant[];
     public String Ynewencoded[];
     public String Unewencoded[];
     public String Vnewencoded[];
@@ -59,6 +62,9 @@ public class YUVSignal implements Serializable {
         this.Yerr = new int[height*width];
         this.Uerr = new int[height*width];
         this.Verr = new int[height*width];
+        this.Yquant = new float[height*width];
+        this.Uquant = new float[height*width];
+        this.Vquant = new float[height*width];
     }
 
     public void setSizeOrg(int size)
