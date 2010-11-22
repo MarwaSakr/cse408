@@ -39,9 +39,14 @@ public class RunlengthEncoding {
 		for(int i = 0; i< encodedYUV.length; i++) {
 			int freq = encodedYUV[i];
 			while(freq > 0){
+			if(i >= encodedYUV.length || index >= originalLength) {
+			    break;
+			    }
+			    //System.out.println("Encoded: "+encodedYUV[i+1]);
 				decoded[index] = encodedYUV[i+1];
 				index++;
 				freq--;
+				
 			}
 			i++;
 		}

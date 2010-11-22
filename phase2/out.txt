@@ -1,0 +1,284 @@
+changeset:   52:0fa06b8fb628
+tag:         tip
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Tue Nov 02 17:56:21 2010 -0700
+summary:     updating encoding
+
+changeset:   51:2f7442229bd9
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Tue Nov 02 17:51:37 2010 -0700
+summary:     fixed problems with encoding
+
+changeset:   50:4eff20c8b7c0
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Tue Nov 02 17:20:10 2010 -0700
+summary:     updating
+
+changeset:   49:a0aeba961ac8
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Tue Nov 02 16:38:53 2010 -0700
+summary:     adding Sebum's latest code
+
+changeset:   48:c6d38c5fed2a
+user:        Bugman511 <bugman511@gmail.com>
+date:        Tue Nov 02 12:56:07 2010 -0700
+summary:     .
+
+changeset:   47:a1f250202801
+user:        Bugman511 <bugman511@gmail.com>
+date:        Tue Nov 02 12:29:18 2010 -0700
+summary:     Made some changes to App.java so that now it actually calls predictive encoding for options 2,4,5, and 6 (it didn't
+
+changeset:   46:5beef4c472c7
+parent:      45:1c700ab57ce9
+parent:      42:2748317c43cc
+user:        Bugman511 <bugman511@gmail.com>
+date:        Tue Nov 02 11:50:59 2010 -0700
+summary:     .
+
+changeset:   45:1c700ab57ce9
+user:        Bugman511 <bugman511@gmail.com>
+date:        Mon Nov 01 21:04:21 2010 -0700
+summary:     IT WORKS!
+
+changeset:   44:b4864574e4e1
+parent:      43:27b2648a989c
+parent:      41:0e16243dc488
+user:        Bugman511 <bugman511@gmail.com>
+date:        Mon Nov 01 19:22:58 2010 -0700
+summary:     made some changes
+
+changeset:   43:27b2648a989c
+parent:      40:aae38b107634
+user:        Bugman511 <bugman511@gmail.com>
+date:        Mon Nov 01 19:18:36 2010 -0700
+summary:     Made some changes
+
+changeset:   42:2748317c43cc
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Mon Nov 01 19:25:45 2010 -0700
+summary:     removing unneccesary files
+
+changeset:   41:0e16243dc488
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Mon Nov 01 18:47:29 2010 -0700
+summary:     adding Prayag's code
+
+changeset:   40:aae38b107634
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Mon Nov 01 17:57:52 2010 -0700
+summary:     updating fixes
+
+changeset:   39:b62f3063eace
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Mon Nov 01 17:23:57 2010 -0700
+summary:     integrate Quantization
+
+changeset:   38:b43d45d99bc1
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Mon Nov 01 17:03:50 2010 -0700
+summary:     adding April and Sebum's code with no integration
+
+changeset:   37:6b8b35e2e2c3
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Sun Oct 31 16:41:55 2010 -0700
+summary:     work on Quantize portion
+
+changeset:   36:07a1b94f9f4c
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Sun Oct 31 12:53:35 2010 -0700
+summary:     adding latest code from joseph
+
+changeset:   35:537bb1fc498f
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Thu Oct 28 10:53:35 2010 -0700
+summary:     initial commit for quantize step of phase 2
+
+changeset:   34:b822538d98bd
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Tue Oct 05 21:53:18 2010 -0700
+summary:     adding phase2 folder
+
+changeset:   33:59163864c3f5
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Tue Oct 05 21:51:34 2010 -0700
+summary:     removing unneeded files
+
+changeset:   32:68ad96117913
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Tue Oct 05 21:47:59 2010 -0700
+summary:     moved to phase1 folder
+
+changeset:   31:9d0664319d1d
+user:        Bugman511 <bugman511@gmail.com>
+date:        Thu Sep 30 19:06:52 2010 -0700
+summary:     All done
+
+changeset:   30:aa49f3c503c4
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Thu Sep 30 19:03:52 2010 -0700
+summary:     adding April's code and fix for Ryans
+
+changeset:   29:2b4c0d0a4ef8
+parent:      28:1b0662f37270
+parent:      27:1eb7c457b121
+user:        Bugman511 <bugman511@gmail.com>
+date:        Thu Sep 30 18:38:46 2010 -0700
+summary:     Please work
+
+changeset:   28:1b0662f37270
+parent:      26:51479f4b4a94
+user:        Bugman511 <bugman511@gmail.com>
+date:        Thu Sep 30 18:37:51 2010 -0700
+summary:     Please Work
+
+changeset:   27:1eb7c457b121
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Thu Sep 30 18:35:02 2010 -0700
+summary:     Modified Prayag's code so it works like Sebum's
+
+changeset:   26:51479f4b4a94
+user:        Bugman511 <bugman511@gmail.com>
+date:        Thu Sep 30 18:29:21 2010 -0700
+summary:     .
+
+changeset:   25:8681cc700ad5
+parent:      24:f1d910bcf2fb
+parent:      23:5a1e84b6ce80
+user:        Bugman511 <bugman511@gmail.com>
+date:        Thu Sep 30 18:15:31 2010 -0700
+summary:     .
+
+changeset:   24:f1d910bcf2fb
+parent:      22:213234a8bf59
+user:        Bugman511 <bugman511@gmail.com>
+date:        Thu Sep 30 18:14:45 2010 -0700
+summary:     .
+
+changeset:   23:5a1e84b6ce80
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Thu Sep 30 18:08:38 2010 -0700
+summary:     adding code for sebum
+
+changeset:   22:213234a8bf59
+user:        Bugman511 <bugman511@gmail.com>
+date:        Thu Sep 30 17:45:57 2010 -0700
+summary:     See if hue rotate works
+
+changeset:   21:01a9195a569e
+parent:      19:9a83b956bb82
+parent:      20:abe85c5a7e2b
+user:        Bugman511 <bugman511@gmail.com>
+date:        Thu Sep 30 12:46:07 2010 -0700
+summary:     . . .
+
+changeset:   20:abe85c5a7e2b
+parent:      18:611477534a83
+user:        Bugman511 <bugman511@gmail.com>
+date:        Thu Sep 30 12:42:43 2010 -0700
+summary:     . . .
+
+changeset:   19:9a83b956bb82
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Thu Sep 30 12:38:37 2010 -0700
+summary:     adding joseph's code
+
+changeset:   18:611477534a83
+user:        Bugman511 <bugman511@gmail.com>
+date:        Thu Sep 30 12:17:32 2010 -0700
+summary:     This should work. . .
+
+changeset:   17:861eb587d018
+user:        Bugman511 <bugman511@gmail.com>
+date:        Thu Sep 30 11:56:18 2010 -0700
+summary:     k
+
+changeset:   16:c08e2fa4fa94
+parent:      15:22315fe819d5
+parent:      14:13ca1b69821b
+user:        Bugman511 <bugman511@gmail.com>
+date:        Thu Sep 30 11:46:28 2010 -0700
+summary:     testing
+
+changeset:   15:22315fe819d5
+parent:      13:3bebb64e7e74
+user:        Bugman511 <bugman511@gmail.com>
+date:        Thu Sep 30 11:42:41 2010 -0700
+summary:     Testing
+
+changeset:   14:13ca1b69821b
+parent:      10:78a327f1d444
+user:        Bugman511 <bugman511@gmail.com>
+date:        Wed Sep 29 12:55:10 2010 -0700
+summary:     hg commit HueRotate.java
+
+changeset:   13:3bebb64e7e74
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Wed Sep 29 18:52:52 2010 -0700
+summary:     added option to save image
+
+changeset:   12:8ce2a28c848b
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Wed Sep 29 18:27:19 2010 -0700
+summary:     adding code for Prayag
+
+changeset:   11:02a4acc39a94
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Wed Sep 29 18:06:16 2010 -0700
+summary:     Adding Ryan's changes
+
+changeset:   10:78a327f1d444
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Tue Sep 28 13:19:45 2010 -0700
+summary:     updated code to use magickviewer instead of window
+
+changeset:   9:3117f4216fba
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Tue Sep 28 11:05:00 2010 -0700
+summary:     remove extraneous manifest file
+
+changeset:   8:b25956830fd7
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Tue Sep 28 11:03:26 2010 -0700
+summary:     changed repo to ignore .class files.
+
+changeset:   7:900d1545fb19
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Tue Sep 21 16:16:13 2010 -0700
+summary:     Fixed bug where non int values in menu threw error and added test images
+
+changeset:   6:6e8547defb6b
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Tue Sep 21 12:10:35 2010 -0700
+summary:     remove unnecessary folder
+
+changeset:   5:bc9eb3ffe762
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Tue Sep 21 12:06:37 2010 -0700
+summary:     add display image feature
+
+changeset:   4:ef0202e922c2
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Thu Sep 16 14:57:35 2010 -0700
+summary:     added indicator to let user know they can enter input
+
+changeset:   3:365ba7d2c723
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Thu Sep 16 11:28:58 2010 -0700
+summary:     replaced tabs with spaces
+
+changeset:   2:113b1512b260
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Thu Sep 16 11:26:08 2010 -0700
+summary:     add necessary code to load an image
+
+changeset:   1:703f147e3603
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Thu Sep 16 10:27:55 2010 -0700
+summary:     adding readme file
+
+changeset:   0:b457e68e16a1
+user:        Robert Peck <soldier.moth@gmail.com>
+date:        Thu Sep 16 10:16:31 2010 -0700
+summary:     initial commit
+

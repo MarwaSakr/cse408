@@ -61,6 +61,8 @@ public class PredictiveCodingOdd {
             for (int i = 1; i < signal.Ynew.length; i++)
             {
                 signal.Ynew[i] += signal.Yerr[i];
+                signal.Unew[i] += signal.Uerr[i];
+                signal.Vnew[i] += signal.Verr[i];
             }
         }
 
