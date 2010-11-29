@@ -4,3 +4,6 @@ syntax: glob
 *.orig
 *.rej
 *.yuv
+phase2/*
+phase1/*
+*.tar.gz
