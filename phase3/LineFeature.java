@@ -1,12 +1,8 @@
 public class LineFeature {
-    int x;
-    int y;
-    int theta;
-    int r;
+    double theta;
+    double r;
 
-    public LineFeature(int x, int y, int theta, int r){
-        this.x = x;
-        this.y = y;
+    public LineFeature(double theta, double r){
         this.theta = theta;
         this.r = r;
     }
