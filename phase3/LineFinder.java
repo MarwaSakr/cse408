@@ -7,14 +7,29 @@ public class LineFinder {
     public static LineFeature[] find(TextureFeature[] textures, int numBins){
 
         //For Each grid locale find params of 5 major lines using texture Feature as input
-        double rStep = 5;
+        double rMin;
+        double rMax;
+        double thetaMin = 0;
+        double thetaMax = 6.28;
+        //calc rmin & rmax
+        for(TextureFeature texture: textures){
+            for(int i=0; i<numBins; i++){
+                double theta = thetaMin + i*(Math.abs(thetaMax)+Math.abs(thetaMin))/numBins;
+                double r = texture.x*Math.cos(theta)+texture.y*Math.sin(theta);
+                rMin = rMin<r ? rMin : r;
+                rMax = rMax>r ? rMax : r;
+            }
+        }
+        double thetaStep = (Math.abs(thetaMax)+Math.abs(thetaMin))/numBins;
+        double rStep = (Math.abs(rMax)+Math.abs(rMin))/numBins;
         int[][] accumulator = new int[numBins][numBins];
+
         for(TextureFeature texture : textures) {
             for(int i = 0; i<numBins; i++){
-                double theta = i*(6.28/numBins);
+                double theta = thetaMin + i*thetaStep;
                 double r = texture.x*Math.cos(theta)+texture.y*Math.sin(theta);
-                int indexR = 0; 
-                while (indexR*rStep < r && indexR < numBins-1){
+                int indexR = 0;
+                while (rMin+indexR*rStep < r && indexR < numBins-1){
                     indexR++;
                 }
                 accumulator[i][indexR]++;
@@ -44,7 +59,7 @@ public class LineFinder {
             for(int theta= 0; theta<numBins; theta++){
                 for(int r = 0; r<numBins;r++){
                     if(accumulator[theta][r] == i){
-                        lines.add(new LineFeature(theta*(6.28/numBins),r*rStep));
+                        lines.add(new LineFeature(thetaMin+theta*thetaStep,rMin+r*rStep));
                     }
                 }
             }

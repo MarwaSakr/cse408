@@ -13,14 +13,6 @@ import magick.*;
 
 public class App
 {
-    /*
-     * Variable initializations
-     * Load all images from /pics/ into inputImages
-     * Select color space
-     * quantize color space
-     * compute color histogram
-     *
-     */
     public static void main( String[] args ) throws MagickException
     {
         // --- Variable Initializations --- //
@@ -36,23 +28,21 @@ public class App
         int bins = 1;
 
 
+
         do{
             Menu.printMenu();
             System.out.print(">");
-            try {
+            try{
                 selected_option = scan.nextInt();
-            } catch(InputMismatchException ex)
-            {
+            } catch(InputMismatchException ex){
                 scan.next();
                 selected_option = -1;
             }
-
-            // --- Process Menu Selection --- //
             switch(selected_option)
             {
                     case Menu.CREATE_DATABASE_KEY: /* Select input directory */
                     {
-                         // --- Select a color space --- //
+                        // --- Select a color space --- //
                         System.out.println("\nPlease enter a colorspace: ");
                         String colorspace = scan.next();
 
@@ -71,10 +61,6 @@ public class App
                         // --- Convert ArrayList into array --- //
                         inputImagesAL.trimToSize();
                         inputImages = (MagickImage[]) inputImagesAL.toArray(new MagickImage[0]); //doesn't work.
-
-                        //System.out.println("Size of inputImages: " + inputImages.length);
-                        
-                       
 
                         identifyColorHist.setup(inputImages, colorspace, bins);
 
@@ -109,11 +95,12 @@ public class App
                             case (1):
                             {
                                 // print histogram
-                                System.out.println("Histogram Specification");
-                                System.out.println("Number of Bins: " + bins);
-                                identifyColorHist.printInfo();
-                                
-                                
+                                for(int counter = 0; counter < bins; counter++)
+                                {
+                                    cHistogram.printBin(counter);
+                                }
+
+
                                 break;
                             }
                             case (2):

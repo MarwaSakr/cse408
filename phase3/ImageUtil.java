@@ -1,3 +1,4 @@
+import java.awt.FileDialog;
 import java.awt.*;
 import java.io.FilenameFilter;
 import magick.*;
@@ -9,23 +10,17 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 
 public class ImageUtil {
-    private static Frame frame = new Frame("CSE408 - Project 3");
+    private static Frame frame = new Frame("CSE408 - Project 2");
     private static MagickViewer window = null;
-    
-    /*static {
-    System.setProperty("jmagick.systemclassloader", "no");
-    }*/
 
-    public static MagickImage load_image(String filename) throws MagickException{
+    public static MagickImage load_image(String filename){
         System.setProperty ("jmagick.systemclassloader" , "no");
         ImageInfo current_image_info = null;
         MagickImage current_image = null;
-
         try {
             System.out.println("loading file: "+filename);
             current_image_info = new ImageInfo(filename);
             current_image = new MagickImage(current_image_info);
-
         } catch (MagickException ex) {
             System.out.println("Error loading file");
             System.err.println(ex.toString());
@@ -39,7 +34,7 @@ public class ImageUtil {
         }
     }
 
-    /*
+     /*
      * @Description Loads a directory of file names into an array
      *              of strings. Then calls ImageUtil.load_image() to
      *              load the images into an MagickImage array of size
@@ -79,9 +74,10 @@ public class ImageUtil {
                 images.add(i, ImageUtil.load_image(root + files[i].getName()));
             }
         }
-        
+
         return (images);
     }
+
 
     /* Don't know if this works. Probably shouldn't use it. */
     public static String dialogPrompt(String structType, String ioType) throws IOException
@@ -139,7 +135,7 @@ public class ImageUtil {
         if (window != null) {
             frame.removeNotify();
             window.setVisible(false);
-            frame = new Frame("CSE408 - Project 3");
+            frame = new Frame("CSE408 - Project 1");
         }
         window = new MagickViewer();
         try{
