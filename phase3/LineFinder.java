@@ -4,7 +4,7 @@ import java.util.Collections;
 
 public class LineFinder {
 
-    public static LineFeature[] find(TextureFeature[] textures, int numBins){
+    public static LineFeature[] find(TextureFeature[] textures, int numBins, String fileName){
 
         //For Each grid locale find params of 5 major lines using texture Feature as input
         double rMin;
@@ -59,7 +59,7 @@ public class LineFinder {
             for(int theta= 0; theta<numBins; theta++){
                 for(int r = 0; r<numBins;r++){
                     if(accumulator[theta][r] == i){
-                        lines.add(new LineFeature(thetaMin+theta*thetaStep,rMin+r*rStep));
+                        lines.add(new LineFeature(thetaMin+theta*thetaStep,rMin+r*rStep,fileName));
                     }
                 }
             }
